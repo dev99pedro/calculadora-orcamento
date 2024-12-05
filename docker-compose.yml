@@ -10,4 +10,3 @@ services:
       - CHOKIDAR_USEPOLLING=true  # Habilita o polling para monitorar as mudanças no código
     volumes:
       - ./src:/app/src       # Mapeia o diretório 'src' local para o 'src' dentro do container
-      - ./node_modules:/app/node_modules  # Mapeia node_modules, se necessário

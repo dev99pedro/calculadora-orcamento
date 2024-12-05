@@ -9,7 +9,7 @@ function App(): JSX.Element {
         <p>
           Edit
           <code> src/App.tsx </code>
-          and save.
+          and save!
         </p>
         <a
           className="App-link"

@@ -1,0 +1,7 @@
+{
+    "name": "calculadora-container-remote",
+    "dockerComposeFile": "../docker-compose.yml",
+    "service": "react-app",
+    "workspaceFolder": "/app"
+}
+  
