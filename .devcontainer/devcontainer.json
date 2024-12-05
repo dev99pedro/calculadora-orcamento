@@ -2,6 +2,13 @@
     "name": "calculadora-container-remote",
     "dockerComposeFile": "../docker-compose.yml",
     "service": "react-app",
-    "workspaceFolder": "/app"
+    "workspaceFolder": "/app",
+    "customizations": {
+        "vscode": {
+          "extensions": [  
+            "dbaeumer.vscode-eslint" // Extensão ESLint,
+        ]
+    }
+  }
 }
   
