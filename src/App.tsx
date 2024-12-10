@@ -9,7 +9,7 @@ function App(): JSX.Element {
         <p>
           Edit
           <code> src/App.tsx </code>
-          an
+          and
         </p>
         <a
           className="App-link"
@@ -17,7 +17,7 @@ function App(): JSX.Element {
           target="_blank"
           rel="noopener noreferrer"
         >
-          Learn React no
+          Learn React
         </a>
       </header>
     </div>
