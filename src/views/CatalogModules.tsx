@@ -1,4 +1,4 @@
-import Module from '../components/Module';
+import Module from '../components/organisms/Module';
 
 function Catalog(): JSX.Element {
   return (
