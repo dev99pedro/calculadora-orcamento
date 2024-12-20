@@ -1,20 +1,19 @@
 import Sphere from '../atoms/Sphere';
+import { ComplexityColorSet, ComplexityLevel } from '../../enums/ComplexityColorSet';
+import { ComplexityName, ComplexityNameType } from '../../enums/ComplexityName';
 
 interface ComplexityProps {
-  level: 'high' | 'low'; // Restrição explícita dos valores possíveis
+  name: string,
+  level: ComplexityLevel,
 }
 
-function Complexity({ level }: ComplexityProps): JSX.Element {
+function Complexity({ name, level }: ComplexityProps): JSX.Element {
   return (
     <>
-      {level === 'high' ? (
-        <>
-          <Sphere color="#67D03B" />
-          <Sphere color="red" />
-          <Sphere color="red" />
-        </>
-      ) : null}
-      {/* Retorna null para o caso de 'low' */}
+      {ComplexityName[level]}
+      {(ComplexityColorSet[level]).map((color) => (
+        <Sphere key={name} color={color} />
+      ))}
     </>
   );
 }

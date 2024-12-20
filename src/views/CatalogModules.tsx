@@ -1,10 +1,13 @@
 import Module from '../components/organisms/Module';
+import ModulesData from '../sharedData/ModulesData';
 
 function Catalog(): JSX.Element {
   return (
     <div>
-      <h1>catalog</h1>
-      <Module />
+      {
+        ModulesData.map((module) => <Module module={module} key={module.name} />)
+      }
+      <h1>Catalog</h1>
     </div>
   );
 }
