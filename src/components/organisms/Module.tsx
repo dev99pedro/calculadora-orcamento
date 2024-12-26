@@ -1,25 +1,31 @@
+import styled from 'styled-components';
 import Complexity from '../molecules/Complexity';
-import { ComplexityLevel } from '../../enums/ComplexityColorSet';
+import ModuleTitle from '../atoms/ModuleTitle';
+import ModuleDescription from '../atoms/ModuleDescription';
+import ModuleImage from '../atoms/ModuleImage';
+import IModule from '../../interfaces/IModule';
+import ModulesInfos from '../molecules/ModuleInfos';
 
-interface ModuleProps {
-  module: {
-    name: string;
-    complexity: ComplexityLevel,
-    description: string;
-    seals?: string;
-  };
-}
+const StyledModule = styled.div`
+  display: flex;
+  width: 720px;
+  height: 310px;
+  border-radius: 10px;
+  border: 1px solid #D0D0D0;
+  justify-content: space-around;
+  align-items: center;
+`;
 
-function Module(Props: ModuleProps): JSX.Element {
-  const { module } = Props;
-  const { name } = module;
-  const { complexity } = module;
+function Module({ module }: { module: IModule }) : JSX.Element {
   return (
-    <div>
-      <h1>Module</h1>
-      {name}
-      <Complexity name={name} level={complexity} />
-    </div>
+    <StyledModule>
+      <ModuleImage src={module.image} />
+      <ModulesInfos>
+        <Complexity name={module.name} level={module.complexity} />
+        <ModuleTitle title={module.name} />
+        <ModuleDescription description={module.description} />
+      </ModulesInfos>
+    </StyledModule>
   );
 }
 

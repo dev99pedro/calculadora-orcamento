@@ -11,7 +11,6 @@ interface SphereProps {
   color: string;
 }
 
-// Adicionando o tipo de retorno explicitamente: JSX.Element
 function Sphere({ color }: SphereProps): JSX.Element {
   return <StyledSphere color={color} />;
 }
