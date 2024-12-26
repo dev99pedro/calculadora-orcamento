@@ -9,14 +9,15 @@ import ModulesInfos from '../molecules/ModuleInfos';
 const StyledModule = styled.div`
   display: flex;
   width: 720px;
-  height: 310px;
+  min-height: 200px;
   border-radius: 10px;
   border: 1px solid #D0D0D0;
   justify-content: space-around;
   align-items: center;
+  padding: 15px 0px;
 `;
 
-function Module({ module }: { module: IModule }) : JSX.Element {
+function Module({ module }: { module: IModule }): JSX.Element {
   return (
     <StyledModule>
       <ModuleImage src={module.image} />

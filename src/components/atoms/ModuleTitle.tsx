@@ -9,6 +9,7 @@ const StyledModuleTitle = styled.div`
   font-size: 24px;
   font-weight: 700;
   margin: 20px 0 10px;
+  width: 250px;
 `;
 
 function ModuleTitle({ title }: ModuleTitleProps): JSX.Element {

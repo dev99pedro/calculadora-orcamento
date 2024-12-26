@@ -1,11 +1,11 @@
-import { ComplexityLevel } from '../enums/ComplexityColorSet';
+import { ComplexityLevel } from '../enums/EComplexityColorSet';
 
 interface IModule {
   name: string;
   complexity: ComplexityLevel,
   description: string;
   image: string;
-  seals?: string;
+  seals?: string[];
 }
 
 export default IModule;

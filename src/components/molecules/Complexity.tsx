@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import Sphere from '../atoms/Sphere';
-import { ComplexityColorSet, ComplexityLevel } from '../../enums/ComplexityColorSet';
-import { ComplexityName, ComplexityNameType } from '../../enums/ComplexityName';
+import { ComplexityColorSet, ComplexityLevel } from '../../enums/EComplexityColorSet';
+import { ComplexityName, ComplexityNameType } from '../../enums/EComplexityName';
 import ComplexityTitle from '../atoms/ComplexityTitle';
 
 interface ComplexityProps {

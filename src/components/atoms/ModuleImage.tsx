@@ -1,8 +1,7 @@
 import styled from 'styled-components';
 
 const StyledModuleImage = styled.img`
-    width: 330px;
-    height: 250px;
+  width: 330px;
 `;
 
 interface ModuleImageProps {
@@ -10,7 +9,9 @@ interface ModuleImageProps {
 }
 
 function ModuleImage({ src }: ModuleImageProps): JSX.Element {
-  return <StyledModuleImage src={src} />;
+  return (
+    <StyledModuleImage src={src} />
+  );
 }
 
 export default ModuleImage;

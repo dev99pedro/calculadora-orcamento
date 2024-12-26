@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 const StyledModulesInfos = styled.div`
-    height: 212px;
+  align-self: flex-start;
 `;
 
 function ModulesInfos({ children }: { children: React.ReactNode }): JSX.Element {
