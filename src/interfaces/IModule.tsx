@@ -5,7 +5,7 @@ interface IModule {
   complexity: ComplexityLevel,
   description: string;
   image: string;
-  seals?: string[];
+  seals?: (({ text: string, color: string } | null)[]) | undefined;
 }
 
 export default IModule;

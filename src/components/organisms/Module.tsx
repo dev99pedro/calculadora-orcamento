@@ -5,6 +5,7 @@ import ModuleDescription from '../atoms/ModuleDescription';
 import ModuleImage from '../atoms/ModuleImage';
 import IModule from '../../interfaces/IModule';
 import ModulesInfos from '../molecules/ModuleInfos';
+import SealContainer from '../atoms/SealContainer';
 
 const StyledModule = styled.div`
   display: flex;
@@ -25,6 +26,11 @@ function Module({ module }: { module: IModule }): JSX.Element {
         <Complexity name={module.name} level={module.complexity} />
         <ModuleTitle title={module.name} />
         <ModuleDescription description={module.description} />
+        {
+          module.seals ? module.seals.map((seal, index) => (
+            seal ? <SealContainer key={index.toString()} sealText={seal.text} /> : null
+          )) : null
+        }
       </ModulesInfos>
     </StyledModule>
   );

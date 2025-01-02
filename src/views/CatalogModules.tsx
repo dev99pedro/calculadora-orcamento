@@ -5,9 +5,8 @@ function Catalog(): JSX.Element {
   return (
     <div>
       {
-        ModulesData.map((module) => <Module module={module} key={module.name} />)
+        ModulesData.map((module) => <Module module={module} key={Math.random()} />)
       }
-      <h1>Catalog</h1>
     </div>
   );
 }

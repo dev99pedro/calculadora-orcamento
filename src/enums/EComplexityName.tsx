@@ -1,7 +1,7 @@
 export const ComplexityName = {
-  high: 'Alta',
-  medium: 'Média',
-  low: 'Baixa',
+  HIGH: 'Alta',
+  MEDIUM: 'Média',
+  LOW: 'Baixa',
 } as const;
 
 export type ComplexityNameType = keyof typeof ComplexityName;
