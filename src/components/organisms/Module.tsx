@@ -4,7 +4,8 @@ import ModuleTitle from '../atoms/ModuleTitle';
 import ModuleDescription from '../atoms/ModuleDescription';
 import ModuleImage from '../atoms/ModuleImage';
 import IModule from '../../interfaces/IModule';
-import ModulesInfos from '../molecules/ModuleInfos';
+import ModulesInfos from '../atoms/ModuleInfos';
+import Seal from '../molecules/Seal';
 import SealContainer from '../atoms/SealContainer';
 
 const StyledModule = styled.div`
@@ -26,11 +27,17 @@ function Module({ module }: { module: IModule }): JSX.Element {
         <Complexity name={module.name} level={module.complexity} />
         <ModuleTitle title={module.name} />
         <ModuleDescription description={module.description} />
-        {
-          module.seals ? module.seals.map((seal, index) => (
-            seal ? <SealContainer key={index.toString()} sealText={seal.text} /> : null
-          )) : null
-        }
+        <SealContainer>
+          {Array.isArray(module.seals) && module.seals.map((seal) => (
+            seal ? (
+              <Seal
+                color={seal.color}
+                text={seal.text}
+                Icon={seal.Icon}
+              />
+            ) : null
+          ))}
+        </SealContainer>
       </ModulesInfos>
     </StyledModule>
   );

@@ -1,18 +1,17 @@
 import styled from 'styled-components';
 
 const StyledSealContainer = styled.div`
-  width: 135px;
-  height: 35px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 13px;
+  width: 312px;
+  padding-top: 21px;
 `;
 
-interface SealProps {
-  sealText: string;
-}
-
-function SealContainer({ sealText }: SealProps): JSX.Element {
+function SealContainer({ children }: { children: React.ReactNode }): JSX.Element {
   return (
     <StyledSealContainer>
-      {sealText}
+      {children}
     </StyledSealContainer>
   );
 }
