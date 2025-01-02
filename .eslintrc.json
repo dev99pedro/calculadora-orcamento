@@ -31,8 +31,6 @@
     },
     "rules": {
         "react/react-in-jsx-scope": "off",
-<<<<<<< HEAD
-=======
         "@typescript-eslint/explicit-function-return-type": 
         [
           "error",
@@ -40,8 +38,6 @@
             "allowExpressions": true
           }
         ]
->>>>>>> main
     }
-    
   }
   
