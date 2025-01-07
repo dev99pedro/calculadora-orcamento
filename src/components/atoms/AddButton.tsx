@@ -2,12 +2,7 @@ import styled from 'styled-components';
 import { ReactComponent as AddIcon } from '../../assets/svgs/add.svg';
 
 const StyledIcon = styled.div<{ isHovered: boolean }>`
-  position: absolute;
-  left: 7px;
-  svg{
-    width: 60px;
-    height: 60px;
-    cursor: pointer;
+  display: flex;
     rect:nth-of-type(1) {
       fill: ${(props) => (props.isHovered ? '#78B2B4' : '#FCF4E6')}
     }
@@ -17,7 +12,6 @@ const StyledIcon = styled.div<{ isHovered: boolean }>`
     path {
       fill: ${(props) => (props.isHovered ? '#ffffff' : '#000000')}
     }
-  }
 `;
 
 interface AddButtonProps {

@@ -11,6 +11,7 @@ import SealContainer from '../atoms/SealContainer';
 import AddButton from '../atoms/AddButton';
 import DeleteButton from '../atoms/DeleteButton';
 import Selected from '../atoms/Selected';
+import ModuleButtonContainer from '../atoms/ModuleButtonContainer';
 
 function getBorderColor(props:
 { isSelected: boolean, isHovered: boolean, isAbleToDelete: boolean }): string {
@@ -66,15 +67,17 @@ function Module({ module }: { module: IModule }): JSX.Element {
         }
       }}
     >
-      {isSelected && isAbleToDelete && isHovered && (
-        <DeleteButton
-          deleted={() => {
-            setIsSelected(false);
-          }}
-        />
-      )}
-      {isSelected && (!isAbleToDelete || !isHovered) && <Selected />}
-      {!isSelected && <AddButton isHovered={isHovered} selected={() => setIsSelected(true)} />}
+      <ModuleButtonContainer>
+        {isSelected && isAbleToDelete && isHovered && (
+          <DeleteButton
+            deleted={() => {
+              setIsSelected(false);
+            }}
+          />
+        )}
+        {isSelected && (!isAbleToDelete || !isHovered) && <Selected />}
+        {!isSelected && <AddButton isHovered={isHovered} selected={() => setIsSelected(true)} />}
+      </ModuleButtonContainer>
       <ModuleImage src={module.image} />
       <ModulesInfos>
         <Complexity name={module.name} level={module.complexity} />
