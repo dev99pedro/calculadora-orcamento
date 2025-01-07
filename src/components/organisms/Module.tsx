@@ -12,6 +12,7 @@ import AddButton from '../atoms/AddButton';
 import DeleteButton from '../atoms/DeleteButton';
 import Selected from '../atoms/Selected';
 import ModuleButtonContainer from '../atoms/ModuleButtonContainer';
+import ModuleStateIndicator from '../atoms/ModuleStateIndicator';
 
 function getBorderColor(props:
 { isSelected: boolean, isHovered: boolean, isAbleToDelete: boolean }): string {
@@ -48,8 +49,14 @@ function Module({ module }: { module: IModule }): JSX.Element {
   const [isSelected, setIsSelected] = useState<boolean>(false);
   const [isHovered, setIsHovered] = useState<boolean>(false);
   const [isAbleToDelete, setIsAbleToDelete] = useState<boolean>(false);
+  const [state, setState] = useState<string>('');
+
+  useEffect(() => {
+    setState(isSelected ? 'Selecionado' : 'removido');
+  }, [isSelected]);
 
   return (
+
     <StyledModule
       onMouseLeave={() => {
         setIsHovered(false);
@@ -60,11 +67,8 @@ function Module({ module }: { module: IModule }): JSX.Element {
       isHovered={isHovered}
       isAbleToDelete={isAbleToDelete}
       onClick={() => {
-        if (isAbleToDelete) {
-          setIsSelected(false);
-        } else {
-          setIsSelected(true);
-        }
+        setIsSelected(!isAbleToDelete);
+        setIsAbleToDelete(false);
       }}
     >
       <ModuleButtonContainer>
@@ -78,6 +82,7 @@ function Module({ module }: { module: IModule }): JSX.Element {
         {isSelected && (!isAbleToDelete || !isHovered) && <Selected />}
         {!isSelected && <AddButton isHovered={isHovered} selected={() => setIsSelected(true)} />}
       </ModuleButtonContainer>
+      <ModuleStateIndicator state={state} />
       <ModuleImage src={module.image} />
       <ModulesInfos>
         <Complexity name={module.name} level={module.complexity} />

@@ -7,7 +7,7 @@ const StyledIcon = styled.div<{ isHovered: boolean }>`
       fill: ${(props) => (props.isHovered ? '#78B2B4' : '#FCF4E6')}
     }
     rect:nth-of-type(2) {
-      stroke: ${(props) => (props.isHovered ? '#3C7D7F' : '#D0D0D0')}
+      stroke: ${(props) => (props.isHovered ? '#3C7D7F' : '#D1BE92')}
     }
     path {
       fill: ${(props) => (props.isHovered ? '#ffffff' : '#000000')}
