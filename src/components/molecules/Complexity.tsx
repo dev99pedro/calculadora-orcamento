@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 import Sphere from '../atoms/Sphere';
 import { ComplexityColorSet, ComplexityLevel } from '../../enums/EComplexityColorSet';
-import { ComplexityName, ComplexityNameType } from '../../enums/EComplexityName';
 import ComplexityTitle from '../atoms/ComplexityTitle';
 
 interface ComplexityProps {
@@ -28,7 +27,7 @@ function Complexity({ name, level }: ComplexityProps): JSX.Element {
           <Sphere key={name} color={color} />
         ))}
       </StyledSphere>
-      <ComplexityTitle title={ComplexityName[level] as ComplexityNameType} />
+      <ComplexityTitle title={level} />
     </StyledContainer>
   );
 }

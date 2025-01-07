@@ -5,6 +5,8 @@ const StyledCustomIcon = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  position: relative;
+  top: -0.5px;
   svg{
     min-width: 16px;
     min-height: 16px;

@@ -1,18 +1,19 @@
 import styled from 'styled-components';
 
-const StyledSealText = styled.div`
-  color: white;
+const StyledSealText = styled.div<{ fontColor: string }>`
+  color: ${(props) => props.fontColor};
   font-size: 10px;
   max-width: 90px;
 `;
 
 interface SealTextProps {
   text: string;
+  fontColor: string;
 }
 
-function SealText({ text }: SealTextProps): JSX.Element {
+function SealText({ text, fontColor }: SealTextProps): JSX.Element {
   return (
-    <StyledSealText>
+    <StyledSealText fontColor={fontColor}>
       {text}
     </StyledSealText>
   );

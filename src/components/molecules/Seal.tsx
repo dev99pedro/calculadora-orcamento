@@ -10,16 +10,20 @@ const StyledSeal = styled.div<{ color: string }>`
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 6px 10px;
   border-radius: 8px;
-  font-weight: 700;
+  font-weight: 500;
 `;
 
-function Seal({ color, text, Icon }: ISeal): JSX.Element {
+function Seal({
+  color,
+  text,
+  Icon,
+  fontColor,
+}: ISeal): JSX.Element {
   return (
     <StyledSeal color={color}>
       <CustomIcon><Icon /></CustomIcon>
-      <SealText text={text} />
+      <SealText text={text} fontColor={fontColor} />
     </StyledSeal>
   );
 }
