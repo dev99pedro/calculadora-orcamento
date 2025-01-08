@@ -14,9 +14,12 @@ import Selected from '../atoms/Selected';
 import ModuleButtonContainer from '../atoms/ModuleButtonContainer';
 import ModuleStateIndicator from '../atoms/ModuleStateIndicator';
 
-function getBorderColor(props:
-{ isSelected: boolean, isHovered: boolean, isAbleToDelete: boolean }): string {
-  if (props.isSelected && props.isHovered && props.isAbleToDelete) {
+function getBorderColor(props: {
+  isSelected: boolean,
+  isHovered: boolean,
+  canDelete: boolean,
+}): string {
+  if (props.isSelected && props.canDelete && props.isHovered) {
     return '#F05F5F';
   }
   if (props.isSelected || props.isHovered) {
@@ -25,15 +28,17 @@ function getBorderColor(props:
   return '#D0D0D0';
 }
 
-function getBorderWidth(props:
-{ isSelected: boolean, isHovered: boolean, isAbleToDelete: boolean }): string {
+function getBorderWidth(props: {
+  isSelected: boolean,
+  isHovered: boolean,
+}): string {
   if (props.isSelected || props.isHovered) {
     return '2px';
   }
   return '1px';
 }
 
-const StyledModule = styled.div<{ isSelected: boolean, isHovered: boolean, isAbleToDelete: boolean }>`
+const StyledModule = styled.div<{ isSelected: boolean, isHovered: boolean, canDelete: boolean }>`
   display: flex;
   width: 720px;
   min-height: 200px;
@@ -48,41 +53,59 @@ const StyledModule = styled.div<{ isSelected: boolean, isHovered: boolean, isAbl
 function Module({ module }: { module: IModule }): JSX.Element {
   const [isSelected, setIsSelected] = useState<boolean>(false);
   const [isHovered, setIsHovered] = useState<boolean>(false);
-  const [isAbleToDelete, setIsAbleToDelete] = useState<boolean>(false);
-  const [state, setState] = useState<string>('');
+  const [isUserClick, setIsUserClick] = useState<boolean>(false);
+  const [canDelete, setCanDelete] = useState<boolean>(false);
+  const [button, setButton] = useState<JSX.Element>(
+    <AddButton isHovered={isHovered} selected={() => setIsSelected(true)} />,
+  );
+  const [canChange, setCanChange] = useState<boolean>(true);
 
   useEffect(() => {
-    setState(isSelected ? 'Selecionado' : 'removido');
-  }, [isSelected]);
+    if (!isSelected) {
+      setButton(<AddButton isHovered={isHovered} selected={() => setIsSelected(true)} />);
+    }
+    if ((isSelected && !canDelete) || (isSelected && !isHovered)) {
+      setButton(<Selected />);
+    }
+    if (isSelected && isHovered && canDelete) {
+      setButton(<DeleteButton deleted={() => { setIsSelected(false); }} />);
+    }
+  }, [canChange, isHovered, canDelete, isSelected]);
 
   return (
-
     <StyledModule
-      onMouseLeave={() => {
-        setIsHovered(false);
-        setIsAbleToDelete(isSelected);
-      }}
-      onMouseEnter={() => setIsHovered(true)}
       isSelected={isSelected}
       isHovered={isHovered}
-      isAbleToDelete={isAbleToDelete}
+      canDelete={canDelete}
+      onMouseLeave={() => {
+        setIsHovered(false);
+      }}
+      onMouseEnter={() => {
+        if (canChange) {
+          setIsHovered(true);
+        }
+      }}
+      onMouseMove={() => {
+        if (canChange) {
+          setCanDelete(isSelected);
+        }
+      }}
       onClick={() => {
-        setIsSelected(!isAbleToDelete);
-        setIsAbleToDelete(false);
+        if (canChange) {
+          setIsSelected(!isSelected);
+          setIsUserClick(true);
+          setCanChange(false);
+        }
       }}
     >
       <ModuleButtonContainer>
-        {isSelected && isAbleToDelete && isHovered && (
-          <DeleteButton
-            deleted={() => {
-              setIsSelected(false);
-            }}
-          />
-        )}
-        {isSelected && (!isAbleToDelete || !isHovered) && <Selected />}
-        {!isSelected && <AddButton isHovered={isHovered} selected={() => setIsSelected(true)} />}
+        {button}
       </ModuleButtonContainer>
-      <ModuleStateIndicator state={state} />
+      <ModuleStateIndicator
+        isUserClick={isUserClick}
+        selected={isSelected}
+        setCanChange={() => setCanChange(true)}
+      />
       <ModuleImage src={module.image} />
       <ModulesInfos>
         <Complexity name={module.name} level={module.complexity} />
