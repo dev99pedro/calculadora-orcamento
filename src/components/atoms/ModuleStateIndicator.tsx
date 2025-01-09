@@ -1,4 +1,9 @@
-import { useState, useEffect } from 'react';
+import {
+  useState,
+  useEffect,
+  Dispatch,
+  SetStateAction,
+} from 'react';
 import styled from 'styled-components';
 
 function getIndicatorColor(props: {
@@ -27,27 +32,37 @@ const StyledModuleStateIndicator = styled.div<{ opacity: number, selected: boole
 
 interface ModuleStateIndicatorProps {
   selected: boolean;
-  isUserClick: boolean;
-  setCanChange: () => void;
+  wasUserClicked: boolean;
+  setCanChange: Dispatch<SetStateAction<boolean>>;
+  setCanClick: Dispatch<SetStateAction<boolean>>;
+  setCanDelete: Dispatch<SetStateAction<boolean>>;
 }
 
 function ModuleStateIndicator({
   selected,
-  isUserClick,
+  wasUserClicked,
   setCanChange,
+  setCanClick,
+  setCanDelete,
 }: ModuleStateIndicatorProps): JSX.Element {
   const [title, setTitle] = useState<string>('');
   const [opacity, setOpacity] = useState<number>(0);
 
   useEffect(() => {
     setTitle(selected ? 'Adicionado' : 'Removido');
-    if (!isUserClick) return;
+    if (!wasUserClicked) return;
+    setCanChange(false);
     setOpacity(1);
     setTimeout(() => {
+      console.log('dentro do timeout', selected);
       setOpacity(0);
-      setCanChange();
-    }, 2000);
-  }, [selected, isUserClick]);
+      setCanChange(true);
+      setCanClick(!selected);
+      if (!selected) {
+        setCanDelete(false);
+      }
+    }, 1500);
+  }, [selected, wasUserClicked, setCanChange]);
 
   return (
     <StyledModuleStateIndicator selected={selected} opacity={opacity}>

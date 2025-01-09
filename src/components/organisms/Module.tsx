@@ -14,20 +14,6 @@ import Selected from '../atoms/Selected';
 import ModuleButtonContainer from '../atoms/ModuleButtonContainer';
 import ModuleStateIndicator from '../atoms/ModuleStateIndicator';
 
-function getBorderColor(props: {
-  isSelected: boolean,
-  isHovered: boolean,
-  canDelete: boolean,
-}): string {
-  if (props.isSelected && props.canDelete && props.isHovered) {
-    return '#F05F5F';
-  }
-  if (props.isSelected || props.isHovered) {
-    return '#3C7D7F';
-  }
-  return '#D0D0D0';
-}
-
 function getBorderWidth(props: {
   isSelected: boolean,
   isHovered: boolean,
@@ -38,12 +24,12 @@ function getBorderWidth(props: {
   return '1px';
 }
 
-const StyledModule = styled.div<{ isSelected: boolean, isHovered: boolean, canDelete: boolean }>`
+const StyledModule = styled.div<{ isSelected: boolean, isHovered: boolean, borderColor: string }>`
   display: flex;
   width: 720px;
   min-height: 200px;
   border-radius: 10px;
-  border: ${(props) => getBorderWidth(props)} solid ${(props) => getBorderColor(props)};
+  border: ${(props) => getBorderWidth(props)} solid ${(props) => props.borderColor};
   justify-content: space-around;
   align-items: center;
   padding: 15px 0px 10px 10px;
@@ -53,58 +39,68 @@ const StyledModule = styled.div<{ isSelected: boolean, isHovered: boolean, canDe
 function Module({ module }: { module: IModule }): JSX.Element {
   const [isSelected, setIsSelected] = useState<boolean>(false);
   const [isHovered, setIsHovered] = useState<boolean>(false);
-  const [isUserClick, setIsUserClick] = useState<boolean>(false);
+  const [wasUserClicked, setwasUserClicked] = useState<boolean>(false);
   const [canDelete, setCanDelete] = useState<boolean>(false);
   const [button, setButton] = useState<JSX.Element>(
     <AddButton isHovered={isHovered} selected={() => setIsSelected(true)} />,
   );
   const [canChange, setCanChange] = useState<boolean>(true);
+  const [canClick, setCanClick] = useState<boolean>(true);
+  const [borderColor, setBorderColor] = useState<string>('#D0D0D0');
 
   useEffect(() => {
+    if (!canChange) return;
     if (!isSelected) {
       setButton(<AddButton isHovered={isHovered} selected={() => setIsSelected(true)} />);
+      if (isHovered) {
+        setBorderColor('#3C7D7F');
+      } else {
+        setBorderColor('#D0D0D0');
+      }
     }
     if ((isSelected && !canDelete) || (isSelected && !isHovered)) {
       setButton(<Selected />);
+      setBorderColor('#3C7D7F');
     }
-    if (isSelected && isHovered && canDelete) {
+    if ((canDelete)) {
       setButton(<DeleteButton deleted={() => { setIsSelected(false); }} />);
+      setBorderColor('#F05F5F');
     }
-  }, [canChange, isHovered, canDelete, isSelected]);
+  }, [canChange, isHovered, canDelete, isSelected, canClick]);
 
   return (
     <StyledModule
       isSelected={isSelected}
       isHovered={isHovered}
-      canDelete={canDelete}
+      borderColor={borderColor}
       onMouseLeave={() => {
         setIsHovered(false);
+        setCanDelete(false);
       }}
       onMouseEnter={() => {
-        if (canChange) {
-          setIsHovered(true);
-        }
+        setIsHovered(true);
       }}
       onMouseMove={() => {
-        if (canChange) {
-          setCanDelete(isSelected);
-        }
+        setCanClick(canChange); // tem que esperar poder mudar
+        setCanDelete(isSelected && canChange);
       }}
       onClick={() => {
-        if (canChange) {
-          setIsSelected(!isSelected);
-          setIsUserClick(true);
-          setCanChange(false);
-        }
+        if (!canClick) return;
+        setIsSelected(!isSelected);
+        setwasUserClicked(true);
+        setCanDelete(isSelected);
+        setCanClick(false);
       }}
     >
       <ModuleButtonContainer>
         {button}
       </ModuleButtonContainer>
       <ModuleStateIndicator
-        isUserClick={isUserClick}
+        wasUserClicked={wasUserClicked}
         selected={isSelected}
-        setCanChange={() => setCanChange(true)}
+        setCanChange={setCanChange}
+        setCanClick={setCanClick}
+        setCanDelete={setCanDelete}
       />
       <ModuleImage src={module.image} />
       <ModulesInfos>
