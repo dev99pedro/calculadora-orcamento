@@ -1,3 +1,7 @@
+import {
+  Dispatch,
+  SetStateAction,
+} from 'react';
 import styled from 'styled-components';
 import { ReactComponent as AddIcon } from '../../assets/svgs/add.svg';
 
@@ -15,14 +19,14 @@ const StyledIcon = styled.div<{ isHovered: boolean }>`
 `;
 
 interface AddButtonProps {
-  selected: () => void;
+  selected: Dispatch<SetStateAction<boolean>>;
   isHovered: boolean;
 }
 
 function AddButton({ selected, isHovered }: AddButtonProps): JSX.Element {
   return (
     <StyledIcon isHovered={isHovered}>
-      <AddIcon onClick={() => { selected(); }} />
+      <AddIcon onClick={() => { selected(true); }} />
     </StyledIcon>
   );
 }

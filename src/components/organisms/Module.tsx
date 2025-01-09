@@ -42,29 +42,46 @@ function Module({ module }: { module: IModule }): JSX.Element {
   const [wasUserClicked, setwasUserClicked] = useState<boolean>(false);
   const [canDelete, setCanDelete] = useState<boolean>(false);
   const [button, setButton] = useState<JSX.Element>(
-    <AddButton isHovered={isHovered} selected={() => setIsSelected(true)} />,
+    <div />,
   );
   const [canChange, setCanChange] = useState<boolean>(true);
   const [canClick, setCanClick] = useState<boolean>(true);
   const [borderColor, setBorderColor] = useState<string>('#D0D0D0');
 
   useEffect(() => {
-    if (!canChange) return;
-    if (!isSelected) {
-      setButton(<AddButton isHovered={isHovered} selected={() => setIsSelected(true)} />);
-      if (isHovered) {
-        setBorderColor('#3C7D7F');
-      } else {
+    const themes = {
+      neutral: () => {
+        setButton(<AddButton isHovered={isHovered} selected={setIsSelected} />);
         setBorderColor('#D0D0D0');
+      },
+      readyToAdd: () => {
+        setButton(<AddButton isHovered={isHovered} selected={setIsSelected} />);
+        setBorderColor('#3C7D7F');
+      },
+      selected: () => {
+        setButton(<Selected />);
+        setBorderColor('#3C7D7F');
+      },
+      delete: () => {
+        setButton(<DeleteButton deleted={() => { setIsSelected(false); }} />);
+        setBorderColor('#F05F5F');
+      },
+    };
+
+    function setModuleTheme(): void {
+      if (!isSelected) {
+        themes[isHovered ? 'readyToAdd' : 'neutral']();
+      } else if (!canDelete || !isHovered) {
+        themes.selected();
+      }
+
+      if (canDelete) {
+        themes.delete();
       }
     }
-    if ((isSelected && !canDelete) || (isSelected && !isHovered)) {
-      setButton(<Selected />);
-      setBorderColor('#3C7D7F');
-    }
-    if ((canDelete)) {
-      setButton(<DeleteButton deleted={() => { setIsSelected(false); }} />);
-      setBorderColor('#F05F5F');
+
+    if (canChange) {
+      setModuleTheme();
     }
   }, [canChange, isHovered, canDelete, isSelected, canClick]);
 
@@ -81,7 +98,7 @@ function Module({ module }: { module: IModule }): JSX.Element {
         setIsHovered(true);
       }}
       onMouseMove={() => {
-        setCanClick(canChange); // tem que esperar poder mudar
+        setCanClick(canChange);
         setCanDelete(isSelected && canChange);
       }}
       onClick={() => {

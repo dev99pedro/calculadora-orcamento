@@ -54,7 +54,6 @@ function ModuleStateIndicator({
     setCanChange(false);
     setOpacity(1);
     setTimeout(() => {
-      console.log('dentro do timeout', selected);
       setOpacity(0);
       setCanChange(true);
       setCanClick(!selected);
@@ -62,7 +61,7 @@ function ModuleStateIndicator({
         setCanDelete(false);
       }
     }, 1500);
-  }, [selected, wasUserClicked, setCanChange]);
+  }, [selected, wasUserClicked, setCanChange, setCanClick, setCanDelete]);
 
   return (
     <StyledModuleStateIndicator selected={selected} opacity={opacity}>
