@@ -5,6 +5,7 @@ import {
   SetStateAction,
 } from 'react';
 import styled from 'styled-components';
+import moduleIndicator from '../../enums/EModuleIndicator';
 
 function getIndicatorColor(props: {
   selected: boolean,
@@ -49,7 +50,7 @@ function ModuleStateIndicator({
   const [opacity, setOpacity] = useState<number>(0);
 
   useEffect(() => {
-    setTitle(selected ? 'Adicionado' : 'Removido');
+    setTitle(selected ? moduleIndicator.added : moduleIndicator.removed);
     if (!wasUserClicked) return;
     setCanChange(false);
     setOpacity(1);
@@ -60,7 +61,7 @@ function ModuleStateIndicator({
       if (!selected) {
         setCanDelete(false);
       }
-    }, 1500);
+    }, moduleIndicator.timeToHide);
   }, [selected, wasUserClicked, setCanChange, setCanClick, setCanDelete]);
 
   return (
