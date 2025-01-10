@@ -19,14 +19,14 @@ const StyledIcon = styled.div<{ isHovered: boolean }>`
 `;
 
 interface AddButtonProps {
-  selected: Dispatch<SetStateAction<boolean>>;
+  setIsSelected: Dispatch<SetStateAction<boolean>>;
   isHovered: boolean;
 }
 
-function AddButton({ selected, isHovered }: AddButtonProps): JSX.Element {
+function AddButton({ setIsSelected, isHovered }: AddButtonProps): JSX.Element {
   return (
     <StyledIcon isHovered={isHovered}>
-      <AddIcon onClick={() => { selected(true); }} />
+      <AddIcon onClick={() => { setIsSelected(true); }} />
     </StyledIcon>
   );
 }
