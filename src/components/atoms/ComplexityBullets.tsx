@@ -28,7 +28,7 @@ function ComplexityBullets(
       {Array.from({ length: quantityBullets }, (_, index) => {
         const isHighlightBullet = index < maxBullets;
         return (
-          <ItemBullet key={index} style={{ backgroundColor: isHighlightBullet ? highlightColor : '#D9D9D9' }}>{index}</ItemBullet>
+          <ItemBullet key={index} style={{ backgroundColor: isHighlightBullet ? highlightColor : '#D9D9D9' }} />
         );
       })}
     </ListBullets>

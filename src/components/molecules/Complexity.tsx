@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 import ComplexityBullets from '../atoms/ComplexityBullets';
 import complexities from '../../infos/ComplexityInfos';
+import ComplexityTitle from '../atoms/ComplexityTitle';
+import Tooltip from './Tooltip';
 
 const DivComplexity = styled.div``;
 
@@ -18,6 +20,9 @@ function Complexity(): JSX.Element {
             highlightBullets={complexity.priority}
             highlightColor={complexity.color}
           />
+          <Tooltip tooltip={complexity.tooltip}>
+            <ComplexityTitle title={complexity.type} />
+          </Tooltip>
         </DivComplexity>
       ))}
     </DivComplexities>
