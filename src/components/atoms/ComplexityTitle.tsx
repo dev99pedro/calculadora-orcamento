@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import IComplexityTitle from '../../interfaces/IComplexityTitle';
-import iconTooltip from '../../assets/images/tooltip.svg';
+import iconTooltip from '../../assets/svg/tooltip.svg';
 
 const HeadingComplexityTitle = styled.h6`
 color: #111;
