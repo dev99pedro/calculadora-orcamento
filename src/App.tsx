@@ -1,26 +1,16 @@
-import logo from './logo.svg';
+import styled from 'styled-components';
 import './App.css';
+import Catalog from './views/CatalogModules';
+
+const StyledAplication = styled.div`
+  font-family: 'Product Sans', sans-serif;
+`;
 
 function App(): JSX.Element {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit
-          <code> src/App.tsx </code>
-          and
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <StyledAplication>
+      <Catalog />
+    </StyledAplication>
   );
 }
 
