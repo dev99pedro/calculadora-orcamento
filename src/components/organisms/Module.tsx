@@ -37,6 +37,23 @@ function Module({ module }: { module: IModule }): JSX.Element {
   const [border, setBorder] = useState<string>('1px solid #D0D0D0');
   const [theme, setTheme] = useState<ThemeEnum>(ThemeEnum.Neutral);
 
+  function resetOnLeave(): void {
+    setIsHovered(false);
+    setCanDelete(false);
+  }
+
+  function toggleSelectedOrDeleted(): void {
+    setIsSelected(!isSelected);
+    setWasUserClicked(true);
+    setCanDelete(isSelected);
+    setCanClick(false);
+  }
+
+  function toggleStatesOnMouseMove(): void {
+    setCanClick(canChange);
+    setCanDelete(isSelected && canChange);
+  }
+
   return (
     <>
       <ThemeHandler
@@ -51,22 +68,17 @@ function Module({ module }: { module: IModule }): JSX.Element {
       <StyledModule
         border={border}
         onMouseLeave={() => {
-          setIsHovered(false);
-          setCanDelete(false);
+          resetOnLeave();
         }}
         onMouseEnter={() => {
           setIsHovered(true);
         }}
         onMouseMove={() => {
-          setCanClick(canChange);
-          setCanDelete(isSelected && canChange);
+          toggleStatesOnMouseMove();
         }}
         onClick={() => {
           if (!canClick) return;
-          setIsSelected(!isSelected);
-          setWasUserClicked(true);
-          setCanDelete(isSelected);
-          setCanClick(false);
+          toggleSelectedOrDeleted();
         }}
       >
         <ModuleButtonContainer>
@@ -78,9 +90,9 @@ function Module({ module }: { module: IModule }): JSX.Element {
           />
         </ModuleButtonContainer>
         <ModuleStateIndicator
+          wasUserClicked={wasUserClicked}
           setWasUserClicked={setWasUserClicked}
           theme={theme}
-          wasUserClicked={wasUserClicked}
           selected={isSelected}
           setCanChange={setCanChange}
           setCanClick={setCanClick}
