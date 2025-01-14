@@ -1,6 +1,6 @@
 import styled from 'styled-components';
-import Module from '../components/organisms/Module';
-import ModulesData from '../sharedData/ModulesData';
+import ModulesData from '../../sharedData/ModulesData';
+import Module from '../organisms/Module';
 
 const StyledCatalog = styled.div`
   display: flex;
