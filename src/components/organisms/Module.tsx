@@ -13,7 +13,7 @@ import ModuleStateIndicator from '../atoms/ModuleStateIndicator';
 import ModuleButton from '../molecules/ModuleButton';
 import ThemeHandler from '../molecules/ThemeHandler';
 import ModuleBorder from '../molecules/ModuleBorder';
-import { Theme } from '../../enums/EThemes';
+import { ThemeEnum } from '../../enums/EThemes';
 
 const StyledModule = styled.div<{ border: string }>`
   display: flex;
@@ -35,7 +35,7 @@ function Module({ module }: { module: IModule }): JSX.Element {
   const [canChange, setCanChange] = useState<boolean>(true);
   const [canClick, setCanClick] = useState<boolean>(true);
   const [border, setBorder] = useState<string>('1px solid #D0D0D0');
-  const [theme, setTheme] = useState<Theme>(Theme.Neutral);
+  const [theme, setTheme] = useState<ThemeEnum>(ThemeEnum.Neutral);
 
   return (
     <>
@@ -72,12 +72,14 @@ function Module({ module }: { module: IModule }): JSX.Element {
         <ModuleButtonContainer>
           <ModuleBorder setBorder={setBorder} theme={theme} />
           <ModuleButton
-            theme={theme}
             isHovered={isHovered}
             setIsSelected={setIsSelected}
+            theme={theme}
           />
         </ModuleButtonContainer>
         <ModuleStateIndicator
+          setWasUserClicked={setWasUserClicked}
+          theme={theme}
           wasUserClicked={wasUserClicked}
           selected={isSelected}
           setCanChange={setCanChange}

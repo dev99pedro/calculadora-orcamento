@@ -3,7 +3,7 @@ import {
   SetStateAction,
 } from 'react';
 
-import { Theme } from '../../enums/EThemes';
+import { ThemeEnum } from '../../enums/EThemes';
 
 interface ThemeHandlerProps {
   canChange: boolean,
@@ -12,7 +12,7 @@ interface ThemeHandlerProps {
   isSelected: boolean,
   canClick: boolean,
   setIsSelected: Dispatch<SetStateAction<boolean>>;
-  setTheme: Dispatch<SetStateAction<Theme>>;
+  setTheme: Dispatch<SetStateAction<ThemeEnum>>;
 }
 
 function ThemeHandler({
@@ -27,13 +27,13 @@ function ThemeHandler({
   useEffect(() => {
     function setThemeHandler(): void {
       if (!isSelected) {
-        setTheme(isHovered ? Theme.ReadyToAdd : Theme.Neutral);
+        setTheme(isHovered ? ThemeEnum.ReadyToAdd : ThemeEnum.Neutral);
       } else if (!canDelete || !isHovered) {
-        setTheme(Theme.Selected);
+        setTheme(ThemeEnum.Selected);
       }
 
       if (canDelete) {
-        setTheme(Theme.Delete);
+        setTheme(ThemeEnum.Delete);
       }
     }
 

@@ -6,6 +6,7 @@ import {
 } from 'react';
 import styled from 'styled-components';
 import moduleIndicator from '../../enums/EModuleIndicator';
+import { ThemeEnum } from '../../enums/EThemes';
 
 function getIndicatorColor(props: {
   selected: boolean,
@@ -34,24 +35,28 @@ const StyledModuleStateIndicator = styled.div<{ opacity: number, selected: boole
 interface ModuleStateIndicatorProps {
   selected: boolean;
   wasUserClicked: boolean;
+  setWasUserClicked: Dispatch<SetStateAction<boolean>>;
   setCanChange: Dispatch<SetStateAction<boolean>>;
   setCanClick: Dispatch<SetStateAction<boolean>>;
   setCanDelete: Dispatch<SetStateAction<boolean>>;
+  theme: ThemeEnum,
 }
 
 function ModuleStateIndicator({
   selected,
   wasUserClicked,
+  setWasUserClicked,
   setCanChange,
   setCanClick,
   setCanDelete,
+  theme,
 }: ModuleStateIndicatorProps): JSX.Element {
   const [title, setTitle] = useState<string>('');
   const [opacity, setOpacity] = useState<number>(0);
 
   useEffect(() => {
-    setTitle(selected ? moduleIndicator.added : moduleIndicator.removed);
     if (!wasUserClicked) return;
+    setTitle(theme === ThemeEnum.Selected ? moduleIndicator.added : moduleIndicator.removed);
     setCanChange(false);
     setOpacity(1);
     setTimeout(() => {
@@ -61,11 +66,12 @@ function ModuleStateIndicator({
       if (!selected) {
         setCanDelete(false);
       }
+      setWasUserClicked(false);
     }, moduleIndicator.timeToHide);
-  }, [selected, wasUserClicked, setCanChange, setCanClick, setCanDelete]);
+  }, [theme, selected, wasUserClicked, setCanChange, setCanClick, setCanDelete, setWasUserClicked]);
 
   return (
-    <StyledModuleStateIndicator selected={selected} opacity={opacity}>
+    <StyledModuleStateIndicator selected={theme === ThemeEnum.Selected} opacity={opacity}>
       {title}
     </StyledModuleStateIndicator>
   );

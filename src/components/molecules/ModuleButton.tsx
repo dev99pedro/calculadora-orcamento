@@ -3,10 +3,10 @@ import styled from 'styled-components';
 import AddButton from '../atoms/AddButton';
 import DeleteButton from '../atoms/DeleteButton';
 import Selected from '../atoms/Selected';
-import { Theme } from '../../enums/EThemes';
+import { ThemeEnum } from '../../enums/EThemes';
 
 interface ModuleButtonProps {
-  theme: Theme;
+  theme: ThemeEnum;
   isHovered: boolean;
   setIsSelected: Dispatch<SetStateAction<boolean>>;
 }
@@ -15,14 +15,7 @@ const StyledModuleButton = styled.div`
   display: flex;
 `;
 
-const renderNeutral = (
-  isHovered: boolean,
-  setIsSelected: Dispatch<SetStateAction<boolean>>,
-): JSX.Element => (
-  <AddButton isHovered={isHovered} setIsSelected={setIsSelected} />
-);
-
-const renderReadyToAdd = (
+const renderNeutralOrReadyToAdd = (
   isHovered: boolean,
   setIsSelected: Dispatch<SetStateAction<boolean>>,
 ): JSX.Element => (
@@ -37,10 +30,10 @@ const renderDelete = (setIsSelected: Dispatch<SetStateAction<boolean>>): JSX.Ele
 
 function ModuleButton({ theme, isHovered, setIsSelected }: ModuleButtonProps): JSX.Element {
   const getButton = {
-    neutral: renderNeutral(isHovered, setIsSelected),
-    readyToAdd: renderReadyToAdd(isHovered, setIsSelected),
-    selected: renderSelected(),
-    delete: renderDelete(setIsSelected),
+    Neutral: renderNeutralOrReadyToAdd(isHovered, setIsSelected),
+    ReadyToAdd: renderNeutralOrReadyToAdd(isHovered, setIsSelected),
+    Selected: renderSelected(),
+    Delete: renderDelete(setIsSelected),
   };
 
   return (
