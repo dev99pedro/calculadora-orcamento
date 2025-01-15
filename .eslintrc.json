@@ -37,7 +37,8 @@
           {
             "allowExpressions": true
           }
-        ]
+        ],
+        "linebreak-style": 0
     }
   }
   
