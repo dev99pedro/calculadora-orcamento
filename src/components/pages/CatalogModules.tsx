@@ -1,6 +1,9 @@
 import styled from 'styled-components';
+import { useState } from 'react';
 import ModulesData from '../../sharedData/ModulesData';
 import Module from '../organisms/Module';
+import SearchModule from '../organisms/SearchModule';
+import IModule from '../../interfaces/IModule';
 
 const StyledCatalog = styled.div`
   display: flex;
@@ -12,12 +15,16 @@ const StyledCatalog = styled.div`
 `;
 
 function Catalog(): JSX.Element {
+  const [filteredModules, setFilteredModules] = useState<IModule[]>(ModulesData);
   return (
-    <StyledCatalog>
-      {
-        ModulesData.map((module) => <Module module={module} key={module.id} />)
-      }
-    </StyledCatalog>
+    <>
+      <SearchModule modulesData={ModulesData} setFilteredModules={setFilteredModules} />
+      <StyledCatalog>
+        {
+          filteredModules.map((module) => <Module module={module} key={module.id} />)
+        }
+      </StyledCatalog>
+    </>
   );
 }
 
