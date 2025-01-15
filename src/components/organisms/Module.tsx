@@ -38,8 +38,10 @@ function Module({ module }: { module: IModule }): JSX.Element {
   const [theme, setTheme] = useState<ThemeEnum>(ThemeEnum.Neutral);
 
   function resetOnLeave(): void {
-    setIsHovered(false);
-    setCanDelete(false);
+    if (canChange) {
+      setIsHovered(false);
+      setCanDelete(false);
+    }
   }
 
   function toggleSelectedOrDeleted(): void {
@@ -52,6 +54,15 @@ function Module({ module }: { module: IModule }): JSX.Element {
   function toggleStatesOnMouseMove(): void {
     setCanClick(canChange);
     setCanDelete(isSelected && canChange);
+  }
+
+  function toggleStatesAfterChange(): void {
+    setCanChange(true);
+    setCanClick(!isSelected);
+    if (!isSelected) {
+      setCanDelete(false);
+    }
+    setWasUserClicked(false);
   }
 
   return (
@@ -71,7 +82,9 @@ function Module({ module }: { module: IModule }): JSX.Element {
           resetOnLeave();
         }}
         onMouseEnter={() => {
-          setIsHovered(true);
+          if (canChange) {
+            setIsHovered(true);
+          }
         }}
         onMouseMove={() => {
           toggleStatesOnMouseMove();
@@ -91,28 +104,25 @@ function Module({ module }: { module: IModule }): JSX.Element {
         </ModuleButtonContainer>
         <ModuleStateIndicator
           wasUserClicked={wasUserClicked}
-          setWasUserClicked={setWasUserClicked}
-          theme={theme}
-          selected={isSelected}
           setCanChange={setCanChange}
-          setCanClick={setCanClick}
-          setCanDelete={setCanDelete}
+          theme={theme}
+          toggleStatesAfterChange={() => { toggleStatesAfterChange(); }}
         />
         <ModuleImage src={module.image} />
         <ModulesInfos>
-          <Complexity name={module.name} level={module.complexity} />
+          <Complexity level={module.complexity} />
           <ModuleTitle title={module.name} />
           <ModuleDescription description={module.description} />
           <SealContainer>
             {Array.isArray(module.seals) && module.seals.map((seal) => (
-              seal ? (
-                <Seal
-                  color={seal.color}
-                  text={seal.text}
-                  Icon={seal.Icon}
-                  fontColor={seal.fontColor}
-                />
-              ) : null
+              <Seal
+                key={`${seal.id}/${module.id}`}
+                id={seal.id}
+                color={seal.color}
+                text={seal.text}
+                Icon={seal.Icon}
+                fontColor={seal.fontColor}
+              />
             ))}
           </SealContainer>
         </ModulesInfos>

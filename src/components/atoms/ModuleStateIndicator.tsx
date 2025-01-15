@@ -33,23 +33,17 @@ const StyledModuleStateIndicator = styled.div<{ opacity: number, selected: boole
 `;
 
 interface ModuleStateIndicatorProps {
-  selected: boolean;
-  setWasUserClicked: Dispatch<SetStateAction<boolean>>;
-  setCanChange: Dispatch<SetStateAction<boolean>>;
-  setCanClick: Dispatch<SetStateAction<boolean>>;
-  setCanDelete: Dispatch<SetStateAction<boolean>>;
   theme: ThemeEnum,
   wasUserClicked: boolean,
+  toggleStatesAfterChange: () => void,
+  setCanChange: Dispatch<SetStateAction<boolean>>,
 }
 
 function ModuleStateIndicator({
-  selected,
-  setWasUserClicked,
-  setCanChange,
-  setCanClick,
-  setCanDelete,
   theme,
   wasUserClicked,
+  toggleStatesAfterChange,
+  setCanChange,
 }: ModuleStateIndicatorProps): JSX.Element {
   const [title, setTitle] = useState<string>('');
   const [opacity, setOpacity] = useState<number>(0);
@@ -61,14 +55,9 @@ function ModuleStateIndicator({
     setOpacity(1);
     setTimeout(() => {
       setOpacity(0);
-      setCanChange(true);
-      setCanClick(!selected);
-      if (!selected) {
-        setCanDelete(false);
-      }
-      setWasUserClicked(false);
+      toggleStatesAfterChange();
     }, moduleIndicator.timeToHide);
-  }, [theme, selected, setCanChange, setCanClick, setCanDelete, setWasUserClicked]);
+  }, [theme, setCanChange, toggleStatesAfterChange, wasUserClicked]);
 
   return (
     <StyledModuleStateIndicator selected={theme === ThemeEnum.Selected} opacity={opacity}>
