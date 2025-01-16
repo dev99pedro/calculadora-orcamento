@@ -17,14 +17,12 @@ const StyledCatalog = styled.div`
 function Catalog(): JSX.Element {
   const [filteredModules, setFilteredModules] = useState<IModule[]>(ModulesData);
   return (
-    <>
+    <StyledCatalog>
       <SearchModule modulesData={ModulesData} setFilteredModules={setFilteredModules} />
-      <StyledCatalog>
-        {
-          filteredModules.map((module) => <Module module={module} key={module.id} />)
-        }
-      </StyledCatalog>
-    </>
+      {
+        filteredModules.map((module) => <Module module={module} key={module.id} />)
+      }
+    </StyledCatalog>
   );
 }
 
