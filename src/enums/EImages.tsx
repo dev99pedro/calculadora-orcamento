@@ -1,4 +1,4 @@
-import image1 from '../assets/images/Image full.jpg';
+import image1 from '../assets/images/Imagem Full.jpg';
 import image2 from '../assets/images/2 Imagens Laterais.jpg';
 import image3 from '../assets/images/4 Imagens Sequenciais.jpg';
 import image4 from '../assets/images/2 Imagens.jpg';
@@ -43,12 +43,51 @@ import image42 from '../assets/images/Vitrine Tripla Simples.jpg';
 import image43 from '../assets/images/Vitrine Quádrupla.jpg';
 import image44 from '../assets/images/Vitrine Quádrupla Simples.jpg';
 
-const images = [
-  image1, image2, image3, image4, image5, image6, image7, image8, image9, image10,
-  image11, image12, image13, image14, image15, image16, image17, image18, image19, image20,
-  image21, image22, image23, image24, image25, image26, image27, image28, image29, image30,
-  image31, image32, image33, image34, image35, image36, image37, image38, image39, image40,
-  image41, image42, image43, image44,
-];
+const images: Record<string, string> = {
+  link1: image1,
+  link2: image2,
+  link3: image3,
+  link4: image4,
+  link5: image5,
+  link6: image6,
+  link7: image7,
+  link8: image8,
+  link9: image9,
+  link10: image10,
+  link11: image11,
+  link12: image12,
+  link13: image13,
+  link14: image14,
+  link15: image15,
+  link16: image16,
+  link17: image17,
+  link18: image18,
+  link19: image19,
+  link20: image20,
+  link21: image21,
+  link22: image22,
+  link23: image23,
+  link24: image24,
+  link25: image25,
+  link26: image26,
+  link27: image27,
+  link28: image28,
+  link29: image29,
+  link30: image30,
+  link31: image31,
+  link32: image32,
+  link33: image33,
+  link34: image34,
+  link35: image35,
+  link36: image36,
+  link37: image37,
+  link38: image38,
+  link39: image39,
+  link40: image40,
+  link41: image41,
+  link42: image42,
+  link43: image43,
+  link44: image44,
+};
 
 export default images;
