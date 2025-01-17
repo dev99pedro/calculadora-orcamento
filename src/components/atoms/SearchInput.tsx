@@ -9,6 +9,7 @@ const StyledSearch = styled.input`
   background-color: #ffffff;
   padding-left: calc(12px + 20px + 8px);
   font-size: 14px;
+  font-style: italic;
   &:focus,
   &:focus-visible{
     outline: 1px solid #5D7EF3;

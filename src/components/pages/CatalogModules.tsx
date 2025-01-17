@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { useState } from 'react';
 import ModulesData from '../../sharedData/ModulesData';
 import Module from '../organisms/Module';
-import SearchModule from '../organisms/SearchModule';
+import SearchModule from '../molecules/SearchModule';
 import IModule from '../../interfaces/IModule';
 
 const StyledCatalog = styled.div`
