@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction } from 'react';
+import { Dispatch, SetStateAction, useEffect } from 'react';
 import { ThemeEnum, ThemeDetails } from '../../enums/EThemes';
 
 interface ModuleBorderProps {
@@ -7,7 +7,9 @@ interface ModuleBorderProps {
 }
 
 function ModuleBorder({ theme, setBorder }: ModuleBorderProps): null {
-  setBorder(`${ThemeDetails[theme].borderWidth} solid ${ThemeDetails[theme].color}`);
+  useEffect(() => {
+    setBorder(`${ThemeDetails[theme].borderWidth} solid ${ThemeDetails[theme].color}`);
+  }, [theme, setBorder]);
 
   return null;
 }
