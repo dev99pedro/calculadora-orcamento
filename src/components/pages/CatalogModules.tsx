@@ -4,6 +4,7 @@ import ModulesData from '../../sharedData/ModulesData';
 import Module from '../organisms/Module';
 import SearchModule from '../molecules/SearchModule';
 import IModule from '../../interfaces/IModule';
+import CustomSelect from '../molecules/CustomSelect';
 
 const StyledCatalog = styled.div`
   display: flex;
@@ -18,6 +19,7 @@ function Catalog(): JSX.Element {
   const [filteredModules, setFilteredModules] = useState<IModule[]>(ModulesData);
   return (
     <StyledCatalog>
+      <CustomSelect />
       <SearchModule modulesData={ModulesData} setFilteredModules={setFilteredModules} />
       {
         filteredModules.map((module) => <Module module={module} key={module.id} />)
