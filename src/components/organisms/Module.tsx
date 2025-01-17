@@ -45,24 +45,28 @@ function Module({ module }: { module: IModule }): JSX.Element {
   }
 
   function toggleSelectedOrDeleted(): void {
+    if (!canClick) return;
     setIsSelected(!isSelected);
     setWasUserClicked(true);
     setCanDelete(isSelected);
     setCanClick(false);
   }
 
-  function toggleStatesOnMouseMove(): void {
-    setCanClick(canChange);
-    setCanDelete(isSelected && canChange);
-  }
-
   function toggleStatesAfterChange(): void {
     setCanChange(true);
-    setCanClick(!isSelected);
     if (!isSelected) {
       setCanDelete(false);
+      setIsHovered(false);
     }
     setWasUserClicked(false);
+  }
+
+  function mouseEnterEvents(): void {
+    if (canChange) {
+      setIsHovered(true);
+      setCanDelete(isSelected);
+      setCanClick(true);
+    }
   }
 
   return (
@@ -82,15 +86,9 @@ function Module({ module }: { module: IModule }): JSX.Element {
           resetOnLeave();
         }}
         onMouseEnter={() => {
-          if (canChange) {
-            setIsHovered(true);
-          }
-        }}
-        onMouseMove={() => {
-          toggleStatesOnMouseMove();
+          mouseEnterEvents();
         }}
         onClick={() => {
-          if (!canClick) return;
           toggleSelectedOrDeleted();
         }}
       >
