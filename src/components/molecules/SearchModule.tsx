@@ -3,7 +3,6 @@ import {
   SetStateAction,
   useEffect,
   useState,
-  useMemo,
 } from 'react';
 import styled from 'styled-components';
 import IModule from '../../interfaces/IModule';
@@ -34,21 +33,17 @@ const StyledCloseIcon = styled.div`
 `;
 interface SearchModuleProps {
   modulesData: IModule[],
-  setFilteredModules: Dispatch<SetStateAction<IModule[]>>
+  setFilteredBySearch: Dispatch<SetStateAction<IModule[]>>
 }
 
-function SearchModule({ modulesData, setFilteredModules } : SearchModuleProps): JSX.Element {
+function SearchModule({ modulesData, setFilteredBySearch } : SearchModuleProps): JSX.Element {
   const [term, setTerm] = useState('');
 
-  const filteredModules = useMemo(
-    () => modulesData
-      .filter((module) => module.name.toLowerCase().includes(term.toLowerCase())),
-    [term, modulesData],
-  );
-
   useEffect(() => {
-    setFilteredModules(filteredModules);
-  }, [filteredModules, setFilteredModules]);
+    const filteredModules = modulesData.filter((module) => module
+      .name.toLowerCase().includes(term.toLowerCase()));
+    setFilteredBySearch(filteredModules);
+  }, [setFilteredBySearch, term, modulesData]);
 
   return (
     <StyledSearchContainer>
