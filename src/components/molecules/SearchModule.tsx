@@ -33,11 +33,20 @@ const StyledCloseIcon = styled.div`
 `;
 interface SearchModuleProps {
   modulesData: IModule[],
-  setFilteredBySearch: Dispatch<SetStateAction<IModule[]>>
+  setFilteredBySearch: Dispatch<SetStateAction<IModule[]>>,
+  cleanAllFilters: boolean,
 }
 
-function SearchModule({ modulesData, setFilteredBySearch } : SearchModuleProps): JSX.Element {
+function SearchModule({
+  modulesData,
+  setFilteredBySearch,
+  cleanAllFilters,
+} : SearchModuleProps): JSX.Element {
   const [term, setTerm] = useState('');
+
+  useEffect(() => {
+    setTerm('');
+  }, [cleanAllFilters]);
 
   useEffect(() => {
     const filteredModules = modulesData.filter((module) => module

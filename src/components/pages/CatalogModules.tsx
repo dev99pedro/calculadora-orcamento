@@ -73,7 +73,11 @@ function Catalog(): JSX.Element {
         setCleanAllFilters(!cleanAllFilters);
       }}
       />
-      <SearchModule modulesData={ModulesData} setFilteredBySearch={setFilteredBySearch} />
+      <SearchModule
+        cleanAllFilters={cleanAllFilters}
+        modulesData={ModulesData}
+        setFilteredBySearch={setFilteredBySearch}
+      />
       {
         ModulesData.map((module) => (
           <Module
