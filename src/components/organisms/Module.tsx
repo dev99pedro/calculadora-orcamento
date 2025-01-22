@@ -15,7 +15,9 @@ import ThemeHandler from '../molecules/ThemeHandler';
 import ModuleBorder from '../molecules/ModuleBorder';
 import { ThemeEnum } from '../../enums/EThemes';
 
-const StyledModule = styled.div<{ border: string; visible: boolean }>`
+const StyledModule = styled.div.withConfig({
+  shouldForwardProp: (prop) => prop !== 'visible',
+})<{ border: string, visible: boolean }>`
   display: ${(props) => (props.visible ? 'flex' : 'none')};
   width: 720px;
   min-height: 200px;

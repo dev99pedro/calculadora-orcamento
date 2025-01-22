@@ -1,7 +1,9 @@
 import {
   Dispatch,
   SetStateAction,
+  useCallback,
   useEffect,
+  useRef,
   useState,
 } from 'react';
 import styled from 'styled-components';
@@ -11,13 +13,13 @@ import { ReactComponent as Unchecked } from '../../assets/svgs/unchecked.svg';
 import IModule from '../../interfaces/IModule';
 import ISeal from '../../interfaces/ISeal';
 
-const StyledSelect = styled.div`
+const StyledFilter = styled.div`
   .select-hide {
     display: none;
   }
 `;
 
-const StyledSelectTitle = styled.div<{ isOpen: boolean }>`
+const StyledFilterTitle = styled.div<{ isOpen: boolean }>`
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -57,10 +59,17 @@ const StyledOption = styled.div`
   user-select: none;
   max-width: 140px;
   align-items: center;
+  cursor: pointer;
   svg{
     cursor: pointer;
     min-width: 16px;
   }
+`;
+
+const StyledCleanFilters = styled.div`
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 5px;
 `;
 
 interface CustomFilterProps {
@@ -80,28 +89,53 @@ function CustomFilter({
 } : CustomFilterProps): JSX.Element {
   const [filters, setFilters] = useState<string[]>([]);
   const [filtersCount, setFiltersCount] = useState(0);
-  const [isOpen, setIsOpen] = useState(false); // Controla a abertura do menu
+  const [isOpen, setIsOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
-  function undoneAllFilters(): void {
+  const undoneAllFilters = useCallback((): void => {
     setFilteredBySelect(modulesData);
+  }, [modulesData, setFilteredBySelect]);
+
+  function uncheckAll(): void {
+    setFilters([]);
   }
 
-  function compareSeals(): void {
-    setFilteredBySelect(modulesData.filter((module) => filters
-      .some((filter) => Array.isArray(module[compareBy])
-    && (module[compareBy] as ISeal[]).some((seal) => seal.text === filter))));
-  }
-
-  function compareStrings(): void {
-    setFilteredBySelect(modulesData.filter((module) => filters
-      .some((filter) => filter === module[compareBy])));
-  }
-
-  function isCompareByObject(): boolean {
-    return typeof modulesData[0][compareBy as keyof IModule] === 'object';
-  }
+  const handleClickOutside = (event: MouseEvent): void => {
+    if (dropdownRef.current
+      && dropdownRef.current.contains
+      && !dropdownRef.current.contains(event.target as Node)) {
+      setIsOpen(false);
+    }
+  };
 
   useEffect(() => {
+    document.addEventListener('mousedown', handleClickOutside);
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
+  useEffect(() => {
+    function compareSeals(): void {
+      setFilteredBySelect(modulesData.filter((module) => {
+        const moduleSeals: ISeal[] | undefined = module[compareBy] as ISeal[] | undefined;
+        if (!Array.isArray(moduleSeals)) {
+          return filters.includes('Sem selos');
+        }
+        return (moduleSeals).some((seal) => filters.includes(seal.text));
+      }));
+    }
+
+    function compareStrings(): void {
+      setFilteredBySelect(modulesData.filter((module) => filters
+        .some((filter) => filter === module[compareBy])));
+    }
+
+    function isCompareByObject(): boolean {
+      return typeof modulesData[0][compareBy as keyof IModule] === 'object';
+    }
+
     if (filtersCount === 0) {
       undoneAllFilters();
     } else if (isCompareByObject()) {
@@ -109,10 +143,14 @@ function CustomFilter({
     } else {
       compareStrings();
     }
-  });
+  }, [compareBy, filters, filtersCount, modulesData, setFilteredBySelect, undoneAllFilters]);
 
   function toggleDropdown(): void {
     setIsOpen((prev) => !prev);
+  }
+
+  function getSelectedFiltersCount(): string {
+    return filtersCount > 0 ? ` ( ${filtersCount} )` : '';
   }
 
   useEffect(() => {
@@ -128,8 +166,8 @@ function CustomFilter({
   }
 
   return (
-    <StyledSelect className="custom-select">
-      <StyledSelectTitle
+    <StyledFilter ref={dropdownRef} className="custom-select">
+      <StyledFilterTitle
         isOpen={isOpen}
         className="select-selected"
         onClick={() => {
@@ -140,9 +178,9 @@ function CustomFilter({
         tabIndex={0}
       >
         {name}
-        {filtersCount > 0 ? ` ( ${filtersCount} )` : ''}
+        {getSelectedFiltersCount()}
         <ToggleFilter />
-      </StyledSelectTitle>
+      </StyledFilterTitle>
       <StyledOptions className={`${isOpen ? '' : 'select-hide'}`}>
         {options.map((option) => (
           <StyledOption
@@ -151,6 +189,9 @@ function CustomFilter({
             role="option"
             tabIndex={0}
             aria-selected={filters.includes(option)}
+            onClick={() => {
+              toggleOption(option);
+            }}
           >
             {
               filters.some((filter) => filter === option) ? (
@@ -168,8 +209,15 @@ function CustomFilter({
             {option}
           </StyledOption>
         ))}
+        <StyledCleanFilters onClick={() => {
+          undoneAllFilters();
+          uncheckAll();
+        }}
+        >
+          Limpar filtro
+        </StyledCleanFilters>
       </StyledOptions>
-    </StyledSelect>
+    </StyledFilter>
   );
 }
 

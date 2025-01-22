@@ -60,6 +60,7 @@ function Catalog(): JSX.Element {
           ESealsNames.SURPRISE.text,
           ESealsNames.VERSATILE.text,
           ESealsNames.WIDELY_USED.text,
+          'Sem selos',
         ] as string[])}
         modulesData={ModulesData}
         setFilteredBySelect={setFilteredBySeals}
