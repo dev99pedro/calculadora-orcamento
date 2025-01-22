@@ -45,7 +45,7 @@ const StyledOptions = styled.div`
   z-index: 99999;
   font-size: 12px;
   background: #EBEBEB;
-  padding: 18px 10px;
+  padding: 18px 0 18px 10px;
   gap: 16px;
   margin-top: 5px;
   user-select: none;
@@ -55,40 +55,61 @@ const StyledOption = styled.div`
   display: flex;
   gap: 8px;
   user-select: none;
+  max-width: 140px;
+  align-items: center;
   svg{
     cursor: pointer;
+    min-width: 16px;
   }
 `;
 
-interface CustomSelectProps {
+interface CustomFilterProps {
   modulesData: IModule[],
   setFilteredBySelect: Dispatch<SetStateAction<IModule[]>>
   options: string[];
   compareBy: string;
+  name: string;
 }
 
-function CustomSelect({
+function CustomFilter({
   modulesData,
   setFilteredBySelect,
   options,
   compareBy,
-} : CustomSelectProps): JSX.Element {
+  name,
+} : CustomFilterProps): JSX.Element {
   const [filters, setFilters] = useState<string[]>([]);
   const [filtersCount, setFiltersCount] = useState(0);
   const [isOpen, setIsOpen] = useState(false); // Controla a abertura do menu
 
+  function undoneAllFilters(): void {
+    setFilteredBySelect(modulesData);
+  }
+
+  function compareSeals(): void {
+    setFilteredBySelect(modulesData.filter((module) => filters
+      .some((filter) => Array.isArray(module[compareBy])
+    && (module[compareBy] as ISeal[]).some((seal) => seal.text === filter))));
+  }
+
+  function compareStrings(): void {
+    setFilteredBySelect(modulesData.filter((module) => filters
+      .some((filter) => filter === module[compareBy])));
+  }
+
+  function isCompareByObject(): boolean {
+    return typeof modulesData[0][compareBy as keyof IModule] === 'object';
+  }
+
   useEffect(() => {
     if (filtersCount === 0) {
-      setFilteredBySelect(modulesData);
-    } else if (typeof modulesData[0][compareBy as keyof IModule] === 'object') {
-      setFilteredBySelect(modulesData.filter((module) => filters
-        .some((filter) => Array.isArray(module[compareBy])
-        && (module[compareBy] as ISeal[]).some((seal) => seal.text === filter))));
+      undoneAllFilters();
+    } else if (isCompareByObject()) {
+      compareSeals();
     } else {
-      setFilteredBySelect(modulesData.filter((module) => filters
-        .some((filter) => filter === module[compareBy])));
+      compareStrings();
     }
-  }, [modulesData, setFilteredBySelect, filters, filtersCount, compareBy]);
+  });
 
   function toggleDropdown(): void {
     setIsOpen((prev) => !prev);
@@ -118,8 +139,8 @@ function CustomSelect({
         role="button"
         tabIndex={0}
       >
-        {filtersCount
-          ? filters.join(', ') : 'Complexidade'}
+        {name}
+        {filtersCount > 0 ? ` ( ${filtersCount} )` : ''}
         <ToggleFilter />
       </StyledSelectTitle>
       <StyledOptions className={`${isOpen ? '' : 'select-hide'}`}>
@@ -152,4 +173,4 @@ function CustomSelect({
   );
 }
 
-export default CustomSelect;
+export default CustomFilter;

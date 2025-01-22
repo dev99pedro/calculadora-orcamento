@@ -15,8 +15,8 @@ import ThemeHandler from '../molecules/ThemeHandler';
 import ModuleBorder from '../molecules/ModuleBorder';
 import { ThemeEnum } from '../../enums/EThemes';
 
-const StyledModule = styled.div<{ border: string }>`
-  display: flex;
+const StyledModule = styled.div<{ border: string; visible: boolean }>`
+  display: ${(props) => (props.visible ? 'flex' : 'none')};
   width: 720px;
   min-height: 200px;
   border-radius: 10px;
@@ -27,7 +27,7 @@ const StyledModule = styled.div<{ border: string }>`
   cursor: pointer;
 `;
 
-function Module({ module }: { module: IModule }): JSX.Element {
+function Module({ module, visible }: { module: IModule, visible: boolean }): JSX.Element {
   const [isSelected, setIsSelected] = useState<boolean>(false);
   const [isHovered, setIsHovered] = useState<boolean>(false);
   const [wasUserClicked, setWasUserClicked] = useState<boolean>(false);
@@ -81,6 +81,7 @@ function Module({ module }: { module: IModule }): JSX.Element {
         setTheme={setTheme}
       />
       <StyledModule
+        visible={visible}
         border={border}
         onMouseLeave={() => {
           resetOnLeave();

@@ -4,10 +4,9 @@ import ModulesData from '../../sharedData/ModulesData';
 import Module from '../organisms/Module';
 import SearchModule from '../molecules/SearchModule';
 import IModule from '../../interfaces/IModule';
-import CustomSelect from '../molecules/CustomSelect';
+import CustomFilter from '../molecules/CustomFilter';
 import EComplexity from '../../enums/EComplexity';
 import ESealsNames from '../../enums/ESeals';
-import ISeal from '../../interfaces/ISeal';
 
 const StyledCatalog = styled.div`
   display: flex;
@@ -19,24 +18,29 @@ const StyledCatalog = styled.div`
 `;
 
 function Catalog(): JSX.Element {
-  const [filteredModules, setFilteredModules] = useState<IModule[]>(ModulesData);
+  const [filteredByAll, setFilteredByAll] = useState<IModule[]>(ModulesData);
   const [filteredBySearch, setFilteredBySearch] = useState<IModule[]>(ModulesData);
   const [filteredByComplexity, setFilteredByComplexity] = useState<IModule[]>(ModulesData);
   const [filteredBySeals, setFilteredBySeals] = useState<IModule[]>(ModulesData);
 
+  function isFiltered(module: IModule): boolean {
+    return filteredByAll.some(({ id }) => module.id === id);
+  }
+
   useEffect(() => {
-    let joinedFilters = filteredBySearch
+    let joinFilters = filteredBySearch
       .filter(({ id }) => filteredByComplexity.some(({ id: IDFiltered }) => IDFiltered === id));
 
-    joinedFilters = joinedFilters.filter(({ id }) => filteredBySeals
+    joinFilters = joinFilters.filter(({ id }) => filteredBySeals
       .some(({ id: IDFiltered }) => IDFiltered === id));
 
-    setFilteredModules(joinedFilters);
+    setFilteredByAll(joinFilters);
   }, [filteredBySearch, filteredByComplexity, filteredBySeals]);
 
   return (
     <StyledCatalog>
-      <CustomSelect
+      <CustomFilter
+        name="Complexidade"
         compareBy="complexity"
         options={([
           EComplexity.LOW,
@@ -46,7 +50,8 @@ function Catalog(): JSX.Element {
         modulesData={ModulesData}
         setFilteredBySelect={setFilteredByComplexity}
       />
-      <CustomSelect
+      <CustomFilter
+        name="Selos"
         compareBy="seals"
         options={([
           ESealsNames.AGILE.text,
@@ -61,7 +66,13 @@ function Catalog(): JSX.Element {
       />
       <SearchModule modulesData={ModulesData} setFilteredBySearch={setFilteredBySearch} />
       {
-        filteredModules.map((module) => <Module module={module} key={module.id} />)
+        ModulesData.map((module) => (
+          <Module
+            visible={isFiltered(module)}
+            module={module}
+            key={module.id}
+          />
+        ))
       }
     </StyledCatalog>
   );
