@@ -4,9 +4,10 @@ import ModulesData from '../../sharedData/ModulesData';
 import Module from '../organisms/Module';
 import SearchModule from '../molecules/SearchModule';
 import IModule from '../../interfaces/IModule';
-import CustomFilter from '../molecules/CustomFilter';
+import CustomFilter from '../organisms/CustomFilter';
 import EComplexity from '../../enums/EComplexity';
 import ESealsNames from '../../enums/ESeals';
+import CleanFilters from '../atoms/CleanFilters';
 
 const StyledCatalog = styled.div`
   display: flex;
@@ -22,6 +23,7 @@ function Catalog(): JSX.Element {
   const [filteredBySearch, setFilteredBySearch] = useState<IModule[]>(ModulesData);
   const [filteredByComplexity, setFilteredByComplexity] = useState<IModule[]>(ModulesData);
   const [filteredBySeals, setFilteredBySeals] = useState<IModule[]>(ModulesData);
+  const [cleanAllFilters, setCleanAllFilters] = useState<boolean>(true);
 
   function isFiltered(module: IModule): boolean {
     return filteredByAll.some(({ id }) => module.id === id);
@@ -49,6 +51,7 @@ function Catalog(): JSX.Element {
         ] as string[])}
         modulesData={ModulesData}
         setFilteredBySelect={setFilteredByComplexity}
+        cleanAllFilters={cleanAllFilters}
       />
       <CustomFilter
         name="Selos"
@@ -64,6 +67,11 @@ function Catalog(): JSX.Element {
         ] as string[])}
         modulesData={ModulesData}
         setFilteredBySelect={setFilteredBySeals}
+        cleanAllFilters={cleanAllFilters}
+      />
+      <CleanFilters callback={() => {
+        setCleanAllFilters(!cleanAllFilters);
+      }}
       />
       <SearchModule modulesData={ModulesData} setFilteredBySearch={setFilteredBySearch} />
       {
