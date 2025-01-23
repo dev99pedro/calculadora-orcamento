@@ -15,8 +15,10 @@ import FilterOptionsContainer from '../molecules/FilterOptionsContainer';
 import DocumentClickHandler from '../handlers/DocumentClickHandler';
 
 const StyledCustomFilter = styled.div`
-  .hide {
-    display: none;
+  &.hide{
+    .options-container{
+      display: none;
+    }
   }
 `;
 interface CustomFilterProps {
@@ -88,7 +90,7 @@ function CustomFilter({
   }, [filters]);
 
   return (
-    <StyledCustomFilter ref={dropdownRef} className="custom-select">
+    <StyledCustomFilter ref={dropdownRef} className={`${isOpen ? '' : 'hide'}`}>
       <DocumentClickHandler
         elementReference={dropdownRef}
         callback={() => { setIsOpen(false); }}
@@ -102,7 +104,6 @@ function CustomFilter({
       <FilterOptionsContainer
         options={options}
         filters={filters}
-        isOpen={isOpen}
         setFilters={setFilters}
         cleanFiltersCallback={() => {
           undoneOptionsSelections();

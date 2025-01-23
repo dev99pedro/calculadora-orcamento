@@ -20,7 +20,6 @@ const StyledOptions = styled.div`
 interface FilterOptionsContainerProps {
   options: string[];
   filters: string[];
-  isOpen: boolean;
   setFilters: Dispatch<SetStateAction<string[]>>
   cleanFiltersCallback: () => void;
 }
@@ -28,7 +27,6 @@ interface FilterOptionsContainerProps {
 function FilterOptionsContainer({
   options,
   filters,
-  isOpen,
   setFilters,
   cleanFiltersCallback,
 }: FilterOptionsContainerProps): JSX.Element {
@@ -41,7 +39,7 @@ function FilterOptionsContainer({
   }
 
   return (
-    <StyledOptions className={`${isOpen ? '' : 'hide'}`}>
+    <StyledOptions className="options-container">
       {options.map((option) => (
         <FilterOption
           key={option}

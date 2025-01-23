@@ -1,6 +1,7 @@
 import IModule from '../interfaces/IModule';
 import seals from '../enums/ESeals';
 import { Complexity } from '../enums/EComplexity';
+import { ModuleTypes } from '../enums/EModuleTypes';
 import ModuleImages from '../enums/EImages';
 
 const modules: IModule[] = [
@@ -11,6 +12,7 @@ const modules: IModule[] = [
     complexity: Complexity.LOW,
     description: 'A imagem tem largura fixa e altura variável. Pode ser usado para banner principais, reengajamento ou faixas.',
     seals: [seals.RECOMMENDED, seals.AGILE],
+    type: ModuleTypes.OnlyImages,
   },
   {
     id: 2,
@@ -18,6 +20,7 @@ const modules: IModule[] = [
     name: '2 Imagens Laterais',
     complexity: Complexity.LOW,
     description: 'Pode ser usado simulando 1 imagem com 2 links ou 2 imagens com 2 links.',
+    type: ModuleTypes.OnlyImages,
   },
   {
     id: 3,
@@ -26,6 +29,7 @@ const modules: IModule[] = [
     complexity: Complexity.MEDIUM,
     description: 'Até 4 imagens com até 4 links, todas com largura fixa e altura variável. Pode ser usado para simular uma imagem contínua com diferentes links ou diferentes imagens com diferentes links.',
     seals: [seals.VERSATILE],
+    type: ModuleTypes.OnlyImages,
   },
   {
     id: 4,
@@ -34,6 +38,7 @@ const modules: IModule[] = [
     complexity: Complexity.LOW,
     description: '2 links, um para cada imagem. As imagens têm largura fixa e altura livre.',
     seals: [seals.WIDELY_USED, seals.AGILE],
+    type: ModuleTypes.OnlyImages,
   },
   {
     id: 5,
@@ -42,6 +47,7 @@ const modules: IModule[] = [
     complexity: Complexity.LOW,
     description: '3 links, um para cada imagem. As imagens têm largura fixa e altura livre.',
     seals: [seals.WIDELY_USED],
+    type: ModuleTypes.OnlyImages,
   },
   {
     id: 6,
@@ -49,6 +55,7 @@ const modules: IModule[] = [
     name: '4 Imagens',
     complexity: Complexity.LOW,
     description: '4 links, um para cada imagem. As imagens têm largura fixa e altura livre.',
+    type: ModuleTypes.OnlyImages,
   },
   {
     id: 7,
@@ -56,6 +63,7 @@ const modules: IModule[] = [
     name: '5 Imagens',
     complexity: Complexity.MEDIUM,
     description: '5 links, um para cada imagem. As imagens têm largura fixa e altura livre.',
+    type: ModuleTypes.OnlyImages,
   },
   {
     id: 8,
@@ -64,6 +72,7 @@ const modules: IModule[] = [
     complexity: Complexity.LOW,
     description: '4 links, um para cada imagem. As imagens têm largura fixa e altura livre.',
     seals: [seals.SURPRISE],
+    type: ModuleTypes.OnlyImages,
   },
   {
     id: 9,
@@ -72,6 +81,7 @@ const modules: IModule[] = [
     complexity: Complexity.LOW,
     description: 'Pode ser utilizado antes de diferentes módulos como título de uma seção específica do e-mail. ',
     seals: [seals.RECOMMENDED],
+    type: ModuleTypes.OnlyTexts,
   },
   {
     id: 10,
@@ -80,6 +90,7 @@ const modules: IModule[] = [
     complexity: Complexity.MEDIUM,
     description: 'Fundo sempre branco.',
     seals: [seals.WIDELY_USED],
+    type: ModuleTypes.OnlyTexts,
   },
   {
     id: 11,
@@ -88,6 +99,7 @@ const modules: IModule[] = [
     complexity: Complexity.MEDIUM,
     description: 'Cor do fundo pode ter 3 opções de cor.1 será padrão + 2 alternativas.',
     seals: [seals.VERSATILE],
+    type: ModuleTypes.OnlyTexts,
   },
   {
     id: 12,
@@ -96,6 +108,7 @@ const modules: IModule[] = [
     complexity: Complexity.MEDIUM,
     description: '2 links, um para cada coluna.',
     seals: [seals.CONTENT],
+    type: ModuleTypes.OnlyTexts,
   },
   {
     id: 13,
@@ -103,6 +116,7 @@ const modules: IModule[] = [
     name: 'Texto com 2 colunas',
     complexity: Complexity.MEDIUM,
     description: '1 link para ambas as colunas.',
+    type: ModuleTypes.OnlyTexts,
   },
   {
     id: 14,
@@ -110,6 +124,7 @@ const modules: IModule[] = [
     name: '3 Colunas de Texto',
     complexity: Complexity.MEDIUM,
     description: '3 links, um para cada coluna.',
+    type: ModuleTypes.OnlyTexts,
   },
   {
     id: 15,
@@ -117,6 +132,7 @@ const modules: IModule[] = [
     name: 'Texto com 3 colunas',
     complexity: Complexity.MEDIUM,
     description: '1 link para todas as colunas.',
+    type: ModuleTypes.OnlyTexts,
   },
   {
     id: 16,
@@ -125,6 +141,7 @@ const modules: IModule[] = [
     complexity: Complexity.MEDIUM,
     description: 'A imagem vai como fundo do módulo e os textos são editáveis. * Este módulo tem suporte apenas parcial em alguns serviços de e - mail como o Windows Mail.Contudo, funciona normalmente nos principais serviços como Apple Mail, Outlook.com, Gmail e seus respectivos aplicativos Mobile.',
     seals: [seals.AGILE],
+    type: ModuleTypes.TextsAndImages,
   },
   {
     id: 17,
@@ -133,6 +150,7 @@ const modules: IModule[] = [
     complexity: Complexity.HIGH,
     description: 'A imagem vai como fundo do módulo e os textos são editáveis. * Este módulo tem suporte apenas parcial em alguns serviços de e - mail como o Windows Mail.Contudo, funciona normalmente nos principais serviços como Apple Mail, Outlook.com, Gmail e seus respectivos aplicativos Mobile.',
     seals: [seals.AGILE],
+    type: ModuleTypes.TextsAndImages,
   },
   {
     id: 18,
@@ -141,6 +159,7 @@ const modules: IModule[] = [
     complexity: Complexity.MEDIUM,
     description: '',
     seals: [seals.WIDELY_USED],
+    type: ModuleTypes.TextsAndImages,
   },
   {
     id: 19,
@@ -149,6 +168,7 @@ const modules: IModule[] = [
     complexity: Complexity.MEDIUM,
     description: '',
     seals: [seals.WIDELY_USED],
+    type: ModuleTypes.TextsAndImages,
   },
   {
     id: 20,
@@ -156,6 +176,7 @@ const modules: IModule[] = [
     name: 'Texto e 2 Imagens à Esquerda',
     complexity: Complexity.MEDIUM,
     description: '',
+    type: ModuleTypes.TextsAndImages,
   },
   {
     id: 21,
@@ -163,6 +184,7 @@ const modules: IModule[] = [
     name: 'Texto e 2 Imagens à Direita',
     complexity: Complexity.MEDIUM,
     description: '',
+    type: ModuleTypes.TextsAndImages,
   },
   {
     id: 22,
@@ -171,6 +193,7 @@ const modules: IModule[] = [
     complexity: Complexity.MEDIUM,
     description: '2 links, um para cada coluna.',
     seals: [seals.WIDELY_USED],
+    type: ModuleTypes.TextsAndImages,
   },
   {
     id: 23,
@@ -178,6 +201,7 @@ const modules: IModule[] = [
     name: 'Texto e Imagem em 2 Colunas',
     complexity: Complexity.MEDIUM,
     description: '1 link para ambas as colunas',
+    type: ModuleTypes.TextsAndImages,
   },
   {
     id: 24,
@@ -186,6 +210,7 @@ const modules: IModule[] = [
     complexity: Complexity.HIGH,
     description: '3 links, um para cada coluna.',
     seals: [seals.CONTENT],
+    type: ModuleTypes.TextsAndImages,
   },
   {
     id: 25,
@@ -193,6 +218,7 @@ const modules: IModule[] = [
     name: 'Itens em 4 colunas.',
     complexity: Complexity.HIGH,
     description: 'Até 4 vantagens e/ou benefícios.',
+    type: ModuleTypes.TextsAndImages,
   },
   {
     id: 26,
@@ -200,6 +226,7 @@ const modules: IModule[] = [
     name: 'Itens com 3 imagens',
     complexity: Complexity.MEDIUM,
     description: 'Até 3 itens.',
+    type: ModuleTypes.TextsAndImages,
   },
   {
     id: 27,
@@ -208,6 +235,7 @@ const modules: IModule[] = [
     complexity: Complexity.HIGH,
     description: 'Até 4 itens',
     seals: [seals.VERSATILE],
+    type: ModuleTypes.TextsAndImages,
   },
   {
     id: 28,
@@ -215,6 +243,7 @@ const modules: IModule[] = [
     name: 'Depoimento',
     complexity: Complexity.LOW,
     description: 'Até 8 itens.',
+    type: ModuleTypes.TextsAndImages,
   },
   {
     id: 29,
@@ -222,6 +251,7 @@ const modules: IModule[] = [
     name: 'Itens em Lista',
     complexity: Complexity.MEDIUM,
     description: 'Cor do fundo pode ter 3 opções de cor. 1 será padrão + 2 alternativas.',
+    type: ModuleTypes.TextsAndImages,
   },
   {
     id: 30,
@@ -230,6 +260,7 @@ const modules: IModule[] = [
     complexity: Complexity.MEDIUM,
     description: 'Cor do fundo pode ter 3 opções de cor. 1 será padrão + 2 alternativas.',
     seals: [seals.AGILE],
+    type: ModuleTypes.TextsAndImages,
   },
   {
     id: 31,
@@ -238,6 +269,7 @@ const modules: IModule[] = [
     complexity: Complexity.MEDIUM,
     description: 'Cor do fundo pode ter 3 opções de cor. 1 será padrão + 2 alternativas.',
     seals: [seals.AGILE],
+    type: ModuleTypes.TextsAndImages,
   },
   {
     id: 32,
@@ -246,6 +278,7 @@ const modules: IModule[] = [
     complexity: Complexity.MEDIUM,
     description: 'Vitrine em 1 linha.',
     seals: [seals.AGILE],
+    type: ModuleTypes.OnlyTexts,
   },
   {
     id: 33,
@@ -253,6 +286,7 @@ const modules: IModule[] = [
     name: 'Vitrine Individual',
     complexity: Complexity.HIGH,
     description: 'Vitrine em 1 linha, com imagem do produto à direita.',
+    type: ModuleTypes.ShowCase,
   },
   {
     id: 34,
@@ -261,6 +295,7 @@ const modules: IModule[] = [
     complexity: Complexity.HIGH,
     description: '',
     seals: [seals.WIDELY_USED],
+    type: ModuleTypes.ShowCase,
   },
   {
     id: 35,
@@ -268,6 +303,7 @@ const modules: IModule[] = [
     name: 'Vitrine Individual Horizontal A',
     complexity: Complexity.MEDIUM,
     description: '',
+    type: ModuleTypes.ShowCase,
   },
   {
     id: 36,
@@ -275,6 +311,7 @@ const modules: IModule[] = [
     name: 'Vitrine Individual Horizontal B',
     complexity: Complexity.MEDIUM,
     description: '',
+    type: ModuleTypes.ShowCase,
   },
   {
     id: 37,
@@ -282,6 +319,7 @@ const modules: IModule[] = [
     name: 'Vitrine Dupla',
     complexity: Complexity.HIGH,
     description: '',
+    type: ModuleTypes.ShowCase,
   },
   {
     id: 38,
@@ -290,6 +328,7 @@ const modules: IModule[] = [
     complexity: Complexity.MEDIUM,
     description: '',
     seals: [seals.WIDELY_USED],
+    type: ModuleTypes.ShowCase,
   },
   {
     id: 39,
@@ -297,6 +336,7 @@ const modules: IModule[] = [
     name: 'Vitrine Dupla Horizontal',
     complexity: Complexity.HIGH,
     description: '',
+    type: ModuleTypes.ShowCase,
   },
   {
     id: 40,
@@ -304,6 +344,7 @@ const modules: IModule[] = [
     name: 'Vitrine Dupla Horizontal Simples',
     complexity: Complexity.MEDIUM,
     description: '',
+    type: ModuleTypes.ShowCase,
   },
   {
     id: 41,
@@ -311,6 +352,7 @@ const modules: IModule[] = [
     name: 'Vitrine Tripla',
     complexity: Complexity.HIGH,
     description: '',
+    type: ModuleTypes.ShowCase,
   },
   {
     id: 42,
@@ -318,6 +360,7 @@ const modules: IModule[] = [
     name: 'Vitrine Tripla Simples',
     complexity: Complexity.MEDIUM,
     description: '',
+    type: ModuleTypes.ShowCase,
   },
   {
     id: 43,
@@ -325,6 +368,7 @@ const modules: IModule[] = [
     name: 'Vitrine Quádrupla',
     complexity: Complexity.HIGH,
     description: '',
+    type: ModuleTypes.ShowCase,
   },
   {
     id: 44,
@@ -332,6 +376,7 @@ const modules: IModule[] = [
     name: 'Vitrine Quádrupla Simples',
     complexity: Complexity.MEDIUM,
     description: '',
+    type: ModuleTypes.ShowCase,
   },
 ];
 

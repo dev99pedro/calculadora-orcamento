@@ -6,8 +6,10 @@ import SearchModule from '../molecules/SearchModule';
 import IModule from '../../interfaces/IModule';
 import CustomFilter from '../organisms/CustomFilter';
 import EComplexity from '../../enums/EComplexity';
+import EModuleTypes from '../../enums/EModuleTypes';
 import ESealsNames from '../../enums/ESeals';
 import CleanFilters from '../atoms/CleanFilters';
+import FiltersResultsNumber from '../atoms/FiltersResultsNumber';
 
 const StyledCatalog = styled.div`
   display: flex;
@@ -22,6 +24,7 @@ function Catalog(): JSX.Element {
   const [filteredByAll, setFilteredByAll] = useState<IModule[]>(ModulesData);
   const [filteredBySearch, setFilteredBySearch] = useState<IModule[]>(ModulesData);
   const [filteredByComplexity, setFilteredByComplexity] = useState<IModule[]>(ModulesData);
+  const [filteredByType, setFilteredByType] = useState<IModule[]>(ModulesData);
   const [filteredBySeals, setFilteredBySeals] = useState<IModule[]>(ModulesData);
   const [cleanAllFilters, setCleanAllFilters] = useState<boolean>(true);
 
@@ -36,11 +39,27 @@ function Catalog(): JSX.Element {
     joinFilters = joinFilters.filter(({ id }) => filteredBySeals
       .some(({ id: IDFiltered }) => IDFiltered === id));
 
+    joinFilters = joinFilters.filter(({ id }) => filteredByType
+      .some(({ id: IDFiltered }) => IDFiltered === id));
+
     setFilteredByAll(joinFilters);
-  }, [filteredBySearch, filteredByComplexity, filteredBySeals]);
+  }, [filteredBySearch, filteredByComplexity, filteredBySeals, filteredByType]);
 
   return (
     <StyledCatalog>
+      <CustomFilter
+        name="Tipo de módulo"
+        compareBy="type"
+        options={([
+          EModuleTypes.OnlyImages,
+          EModuleTypes.OnlyTexts,
+          EModuleTypes.ShowCase,
+          EModuleTypes.TextsAndImages,
+        ] as string[])}
+        modulesData={ModulesData}
+        setFilteredBySelect={setFilteredByType}
+        cleanAllFilters={cleanAllFilters}
+      />
       <CustomFilter
         name="Complexidade"
         compareBy="complexity"
@@ -73,6 +92,7 @@ function Catalog(): JSX.Element {
         setCleanAllFilters(!cleanAllFilters);
       }}
       />
+      <FiltersResultsNumber resultsQtd={filteredByAll.length} />
       <SearchModule
         cleanAllFilters={cleanAllFilters}
         modulesData={ModulesData}
