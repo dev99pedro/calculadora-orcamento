@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import {
   Dispatch,
   SetStateAction,
@@ -10,29 +11,14 @@ import styled from 'styled-components';
 import IModule from '../../interfaces/IModule';
 import ISeal from '../../interfaces/ISeal';
 import FilterHead from '../molecules/FilterHead';
-import CleanFilters from '../atoms/CleanFilters';
-import FilterOptions from '../molecules/FilterOptions';
+import FilterOptionsContainer from '../molecules/FilterOptionsContainer';
+import DocumentClickHandler from '../handlers/DocumentClickHandler';
 
-const StyledFilter = styled.div`
-  .select-hide {
+const StyledCustomFilter = styled.div`
+  .hide {
     display: none;
   }
 `;
-
-const StyledOptions = styled.div`
-  display: flex;
-  flex-direction: column;
-  color: #888888;
-  border-radius: 8px;
-  z-index: 99999;
-  font-size: 12px;
-  background: #EBEBEB;
-  padding: 18px 0 18px 10px;
-  gap: 16px;
-  margin-top: 5px;
-  user-select: none;
-`;
-
 interface CustomFilterProps {
   modulesData: IModule[],
   setFilteredBySelect: Dispatch<SetStateAction<IModule[]>>
@@ -55,21 +41,13 @@ function CustomFilter({
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
-  const undoneAllFilters = useCallback((): void => {
+  const undoneOptionsSelections = useCallback((): void => {
     setFilteredBySelect(modulesData);
-  }, [modulesData, setFilteredBySelect]);
+  }, [modulesData]);
 
   function uncheckAll(): void {
     setFilters([]);
   }
-
-  const handleClickOutside = (event: MouseEvent): void => {
-    if (dropdownRef.current
-      && dropdownRef.current.contains
-      && !dropdownRef.current.contains(event.target as Node)) {
-      setIsOpen(false);
-    }
-  };
 
   const compareSeals = useCallback((): void => {
     setFilteredBySelect(modulesData.filter((module) => {
@@ -79,90 +57,59 @@ function CustomFilter({
       }
       return (moduleSeals).some((seal) => filters.includes(seal.text));
     }));
-  }, [modulesData, compareBy, filters, setFilteredBySelect]);
+  }, [filters]);
 
   const compareStrings = useCallback((): void => {
     setFilteredBySelect(modulesData.filter((module) => filters
       .some((filter) => filter === module[compareBy])));
-  }, [modulesData, compareBy, filters, setFilteredBySelect]);
+  }, [filters]);
 
   const isCompareByObject = useCallback((): boolean => typeof modulesData[0][compareBy as keyof IModule] === 'object', [modulesData, compareBy]);
 
   useEffect(() => {
-    document.addEventListener('mousedown', handleClickOutside);
-
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, []);
-
-  useEffect(() => {
-    undoneAllFilters();
+    undoneOptionsSelections();
     uncheckAll();
-    console.log('mudou');
   }, [cleanAllFilters]);
 
   useEffect(() => {
     if (filtersCount === 0) {
-      undoneAllFilters();
+      undoneOptionsSelections();
     } else if (isCompareByObject()) {
       compareSeals();
     } else {
       compareStrings();
     }
   }, [
-    compareBy,
-    compareSeals,
-    compareStrings,
-    filters,
     filtersCount,
-    isCompareByObject,
-    modulesData,
-    setFilteredBySelect,
-    undoneAllFilters,
   ]);
 
   useEffect(() => {
     setFiltersCount(filters.length);
   }, [filters]);
 
-  function toggleOption(option: string): void {
-    if (!filters.some((filter) => filter === option)) {
-      setFilters([...filters, option]);
-    } else {
-      setFilters(filters.filter((filter) => filter !== option));
-    }
-  }
-
   return (
-    <StyledFilter ref={dropdownRef} className="custom-select">
+    <StyledCustomFilter ref={dropdownRef} className="custom-select">
+      <DocumentClickHandler
+        elementReference={dropdownRef}
+        callback={() => { setIsOpen(false); }}
+      />
       <FilterHead
         name={name}
         isOpen={isOpen}
         setIsOpen={setIsOpen}
         filtersCount={filtersCount}
       />
-      <StyledOptions className={`${isOpen ? '' : 'select-hide'}`}>
-        {options.map((option) => (
-          <FilterOptions
-            key={option}
-            option={option}
-            callback={() => {
-              toggleOption(option);
-            }}
-            filters={filters}
-          />
-        ))}
-        <CleanFilters
-          callback={
-            () => {
-              undoneAllFilters();
-              uncheckAll();
-            }
-          }
-        />
-      </StyledOptions>
-    </StyledFilter>
+      <FilterOptionsContainer
+        options={options}
+        filters={filters}
+        isOpen={isOpen}
+        setFilters={setFilters}
+        cleanFiltersCallback={() => {
+          undoneOptionsSelections();
+          uncheckAll();
+        }}
+      />
+    </StyledCustomFilter>
   );
 }
 

@@ -11,7 +11,7 @@ import SealContainer from '../atoms/SealContainer';
 import ModuleButtonContainer from '../atoms/ModuleButtonContainer';
 import ModuleStateIndicator from '../atoms/ModuleStateIndicator';
 import ModuleButton from '../molecules/ModuleButton';
-import ThemeHandler from './ThemeHandler';
+import ThemeHandler from '../handlers/ThemeHandler';
 import ModuleBorder from '../molecules/ModuleBorder';
 import { ThemeEnum } from '../../enums/EThemes';
 

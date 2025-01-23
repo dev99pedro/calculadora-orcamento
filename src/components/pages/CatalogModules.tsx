@@ -25,7 +25,7 @@ function Catalog(): JSX.Element {
   const [filteredBySeals, setFilteredBySeals] = useState<IModule[]>(ModulesData);
   const [cleanAllFilters, setCleanAllFilters] = useState<boolean>(true);
 
-  function isFiltered(module: IModule): boolean {
+  function isModuleVisible(module: IModule): boolean {
     return filteredByAll.some(({ id }) => module.id === id);
   }
 
@@ -81,7 +81,7 @@ function Catalog(): JSX.Element {
       {
         ModulesData.map((module) => (
           <Module
-            visible={isFiltered(module)}
+            visible={isModuleVisible(module)}
             module={module}
             key={module.id}
           />
