@@ -12,7 +12,7 @@ const StyledModuleDescription = styled.div`
 function FiltersResultsNumber({ resultsQtd }: FiltersResultsNumberProps): JSX.Element {
   return (
     <StyledModuleDescription>
-      {`${resultsQtd} Resultado${resultsQtd < 2 ? '' : 's'}`}
+      {`${resultsQtd} Resultado${resultsQtd === 1 ? '' : 's'}`}
     </StyledModuleDescription>
   );
 }

@@ -1,15 +1,9 @@
+import { useState } from 'react';
 import styled from 'styled-components';
-import { useEffect, useState } from 'react';
 import ModulesData from '../../sharedData/ModulesData';
 import Module from '../organisms/Module';
-import SearchModule from '../molecules/SearchModule';
+import FiltersContainer from '../organisms/FiltersContainer';
 import IModule from '../../interfaces/IModule';
-import CustomFilter from '../organisms/CustomFilter';
-import EComplexity from '../../enums/EComplexity';
-import EModuleTypes from '../../enums/EModuleTypes';
-import ESealsNames from '../../enums/ESeals';
-import CleanFilters from '../atoms/CleanFilters';
-import FiltersResultsNumber from '../atoms/FiltersResultsNumber';
 
 const StyledCatalog = styled.div`
   display: flex;
@@ -22,82 +16,14 @@ const StyledCatalog = styled.div`
 
 function Catalog(): JSX.Element {
   const [filteredByAll, setFilteredByAll] = useState<IModule[]>(ModulesData);
-  const [filteredBySearch, setFilteredBySearch] = useState<IModule[]>(ModulesData);
-  const [filteredByComplexity, setFilteredByComplexity] = useState<IModule[]>(ModulesData);
-  const [filteredByType, setFilteredByType] = useState<IModule[]>(ModulesData);
-  const [filteredBySeals, setFilteredBySeals] = useState<IModule[]>(ModulesData);
-  const [cleanAllFilters, setCleanAllFilters] = useState<boolean>(true);
 
   function isModuleVisible(module: IModule): boolean {
     return filteredByAll.some(({ id }) => module.id === id);
   }
 
-  useEffect(() => {
-    let joinFilters = filteredBySearch
-      .filter(({ id }) => filteredByComplexity.some(({ id: IDFiltered }) => IDFiltered === id));
-
-    joinFilters = joinFilters.filter(({ id }) => filteredBySeals
-      .some(({ id: IDFiltered }) => IDFiltered === id));
-
-    joinFilters = joinFilters.filter(({ id }) => filteredByType
-      .some(({ id: IDFiltered }) => IDFiltered === id));
-
-    setFilteredByAll(joinFilters);
-  }, [filteredBySearch, filteredByComplexity, filteredBySeals, filteredByType]);
-
   return (
     <StyledCatalog>
-      <CustomFilter
-        name="Tipo de módulo"
-        compareBy="type"
-        options={([
-          EModuleTypes.OnlyImages,
-          EModuleTypes.OnlyTexts,
-          EModuleTypes.ShowCase,
-          EModuleTypes.TextsAndImages,
-        ] as string[])}
-        modulesData={ModulesData}
-        setFilteredBySelect={setFilteredByType}
-        cleanAllFilters={cleanAllFilters}
-      />
-      <CustomFilter
-        name="Complexidade"
-        compareBy="complexity"
-        options={([
-          EComplexity.LOW,
-          EComplexity.MEDIUM,
-          EComplexity.HIGH,
-        ] as string[])}
-        modulesData={ModulesData}
-        setFilteredBySelect={setFilteredByComplexity}
-        cleanAllFilters={cleanAllFilters}
-      />
-      <CustomFilter
-        name="Selos"
-        compareBy="seals"
-        options={([
-          ESealsNames.AGILE.text,
-          ESealsNames.CONTENT.text,
-          ESealsNames.RECOMMENDED.text,
-          ESealsNames.SURPRISE.text,
-          ESealsNames.VERSATILE.text,
-          ESealsNames.WIDELY_USED.text,
-          'Sem selos',
-        ] as string[])}
-        modulesData={ModulesData}
-        setFilteredBySelect={setFilteredBySeals}
-        cleanAllFilters={cleanAllFilters}
-      />
-      <CleanFilters callback={() => {
-        setCleanAllFilters(!cleanAllFilters);
-      }}
-      />
-      <FiltersResultsNumber resultsQtd={filteredByAll.length} />
-      <SearchModule
-        cleanAllFilters={cleanAllFilters}
-        modulesData={ModulesData}
-        setFilteredBySearch={setFilteredBySearch}
-      />
+      <FiltersContainer resultsQtd={filteredByAll.length} setFilteredByAll={setFilteredByAll} />
       {
         ModulesData.map((module) => (
           <Module

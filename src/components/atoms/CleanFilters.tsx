@@ -4,20 +4,24 @@ const StyledCleanFilters = styled.div`
   cursor: pointer;
   text-decoration: underline;
   text-underline-offset: 5px;
+  color: #666666;
+  font-size: 12px;
 `;
 
 interface CleanFiltersProps {
+  title: string,
   callback: () => void;
 }
 
-function FilterHead({
+function CleanFilters({
+  title,
   callback,
 }: CleanFiltersProps): JSX.Element {
   return (
     <StyledCleanFilters onClick={() => callback()}>
-      Limpar filtro
+      {title}
     </StyledCleanFilters>
   );
 }
 
-export default FilterHead;
+export default CleanFilters;

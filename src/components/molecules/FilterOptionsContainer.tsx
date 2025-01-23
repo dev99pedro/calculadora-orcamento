@@ -6,6 +6,7 @@ import CleanFilters from '../atoms/CleanFilters';
 const StyledOptions = styled.div`
   display: flex;
   flex-direction: column;
+  position: absolute;
   color: #888888;
   border-radius: 8px;
   z-index: 99999;
@@ -15,6 +16,7 @@ const StyledOptions = styled.div`
   gap: 16px;
   margin-top: 5px;
   user-select: none;
+  width: 140px;
 `;
 
 interface FilterOptionsContainerProps {
@@ -51,6 +53,7 @@ function FilterOptionsContainer({
         />
       ))}
       <CleanFilters
+        title="Limpar filtro"
         callback={
           () => {
             cleanFiltersCallback();
