@@ -2,7 +2,7 @@ import { Dispatch, SetStateAction } from 'react';
 import styled from 'styled-components';
 
 const StyledSearch = styled.input`
-  width: 250px;
+  width: 208px;
   height: 44px;
   border: none;
   border-radius: 8px;

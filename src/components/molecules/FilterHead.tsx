@@ -5,7 +5,7 @@ import {
 import styled from 'styled-components';
 import { ReactComponent as ToggleFilter } from '../../assets/svgs/toggleFilter.svg';
 
-const StyledFilterTitle = styled.div<{ isOpen: boolean }>`
+const StyledFilterHead = styled.div<{ isOpen: boolean }>`
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -25,19 +25,19 @@ const StyledFilterTitle = styled.div<{ isOpen: boolean }>`
   }
 `;
 
-interface FilterTitleProps {
+interface FilterHeadProps {
   name: string;
   isOpen: boolean;
   setIsOpen: Dispatch<SetStateAction<boolean>>;
   filtersCount: number,
 }
 
-function FilterTitle({
+function FilterHead({
   name,
   isOpen,
   setIsOpen,
   filtersCount,
-}: FilterTitleProps): JSX.Element {
+}: FilterHeadProps): JSX.Element {
   function toggleDropdown(): void {
     setIsOpen((prev) => !prev);
   }
@@ -47,7 +47,7 @@ function FilterTitle({
   }
 
   return (
-    <StyledFilterTitle
+    <StyledFilterHead
       isOpen={isOpen}
       className="select-selected"
       onClick={() => {
@@ -60,8 +60,8 @@ function FilterTitle({
       {name}
       {getSelectedFiltersCount()}
       <ToggleFilter />
-    </StyledFilterTitle>
+    </StyledFilterHead>
   );
 }
 
-export default FilterTitle;
+export default FilterHead;

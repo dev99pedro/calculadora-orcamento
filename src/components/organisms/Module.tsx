@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import Complexity from '../molecules/Complexity';
 import ModuleTitle from '../atoms/ModuleTitle';
@@ -29,7 +29,13 @@ const StyledModule = styled.div.withConfig({
   cursor: pointer;
 `;
 
-function Module({ module, visible }: { module: IModule, visible: boolean }): JSX.Element {
+interface ModuleProps {
+  module: IModule;
+  visible: boolean;
+  setSelectedModules: React.Dispatch<React.SetStateAction<IModule[]>>;
+}
+
+function Module({ module, visible, setSelectedModules }: ModuleProps): JSX.Element {
   const [isSelected, setIsSelected] = useState<boolean>(false);
   const [isHovered, setIsHovered] = useState<boolean>(false);
   const [wasUserClicked, setWasUserClicked] = useState<boolean>(false);
@@ -45,6 +51,21 @@ function Module({ module, visible }: { module: IModule, visible: boolean }): JSX
       setCanDelete(false);
     }
   }
+
+  const updateSelectedModules = useCallback(() => {
+    if (isSelected) {
+      setSelectedModules((prev: IModule[]) => {
+        const newModules = [...prev, module];
+        return newModules;
+      });
+    } else {
+      setSelectedModules((prev) => prev.filter(({ id }) => id !== module.id));
+    }
+  }, [isSelected, module, setSelectedModules]);
+
+  useEffect(() => {
+    updateSelectedModules();
+  }, [updateSelectedModules]);
 
   function toggleSelectedOrDeleted(): void {
     if (!canClick) return;

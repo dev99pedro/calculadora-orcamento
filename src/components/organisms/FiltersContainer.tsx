@@ -14,17 +14,21 @@ import EModuleTypes from '../../enums/EModuleTypes';
 import ESealsNames from '../../enums/ESeals';
 import CleanFilters from '../atoms/CleanFilters';
 import FiltersResultsNumber from '../atoms/FiltersResultsNumber';
+import FiltersToggle from '../atoms/FiltersToggle';
 
 const StyledFiltersContainer = styled.div`
   display: flex;
-  flex-direction: column;
   background-color: #F5F5F5;
-  height: 116px;
   width: 730px;
-  `;
+  flex-wrap: wrap;
+  align-items: center;
+  > div{
+    margin-right: 42px;
+  }
+`;
 
-const StyledFiltersSubContainer = styled.div`
-  display: flex;
+const StyledFiltersSubContainer = styled.div<{ visible: boolean }>`
+  display: ${({ visible }) => (visible ? 'flex' : 'none')};
   align-items: center;
   height: 60px;
   gap: 20px;
@@ -41,6 +45,7 @@ function FiltersContainer({ setFilteredByAll, resultsQtd } : FiltersContainerPro
   const [filteredByType, setFilteredByType] = useState<IModule[]>(ModulesData);
   const [filteredBySeals, setFilteredBySeals] = useState<IModule[]>(ModulesData);
   const [cleanAllFilters, setCleanAllFilters] = useState<boolean>(true);
+  const [areFiltersVisible, setAreFiltersVisible] = useState<boolean>(false);
 
   useEffect(() => {
     let joinFilters = filteredBySearch
@@ -62,7 +67,13 @@ function FiltersContainer({ setFilteredByAll, resultsQtd } : FiltersContainerPro
         modulesData={ModulesData}
         setFilteredBySearch={setFilteredBySearch}
       />
-      <StyledFiltersSubContainer>
+      <FiltersToggle
+        areFiltersVisible={areFiltersVisible}
+        setAreFiltersVisible={setAreFiltersVisible}
+      />
+      <StyledFiltersSubContainer
+        visible={areFiltersVisible}
+      >
         <CustomFilter
           name="Tipo de módulo"
           compareBy="type"

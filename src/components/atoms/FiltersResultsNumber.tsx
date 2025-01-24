@@ -5,6 +5,7 @@ interface FiltersResultsNumberProps {
 }
 
 const StyledModuleDescription = styled.div`
+  margin-left: auto;
   color: #111111;
   font-size: 12px;
 `;

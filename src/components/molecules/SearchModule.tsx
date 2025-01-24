@@ -12,6 +12,7 @@ import SearchInput from '../atoms/SearchInput';
 
 const StyledSearchContainer = styled.div`
   position: relative;
+  width: 250px;
 `;
 
 const StyledSearchIcon = styled.div`
