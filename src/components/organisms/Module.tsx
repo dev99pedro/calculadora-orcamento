@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import Complexity from '../molecules/Complexity';
 import ModuleTitle from '../atoms/ModuleTitle';
@@ -11,12 +11,14 @@ import SealContainer from '../atoms/SealContainer';
 import ModuleButtonContainer from '../atoms/ModuleButtonContainer';
 import ModuleStateIndicator from '../atoms/ModuleStateIndicator';
 import ModuleButton from '../molecules/ModuleButton';
-import ThemeHandler from '../molecules/ThemeHandler';
+import ThemeHandler from '../handlers/ThemeHandler';
 import ModuleBorder from '../molecules/ModuleBorder';
 import { ThemeEnum } from '../../enums/EThemes';
 
-const StyledModule = styled.div<{ border: string }>`
-  display: flex;
+const StyledModule = styled.div.withConfig({
+  shouldForwardProp: (prop) => prop !== 'visible',
+})<{ border: string, visible: boolean }>`
+  display: ${(props) => (props.visible ? 'flex' : 'none')};
   width: 720px;
   min-height: 200px;
   border-radius: 10px;
@@ -27,7 +29,13 @@ const StyledModule = styled.div<{ border: string }>`
   cursor: pointer;
 `;
 
-function Module({ module }: { module: IModule }): JSX.Element {
+interface ModuleProps {
+  module: IModule;
+  visible: boolean;
+  setSelectedModules: React.Dispatch<React.SetStateAction<IModule[]>>;
+}
+
+function Module({ module, visible, setSelectedModules }: ModuleProps): JSX.Element {
   const [isSelected, setIsSelected] = useState<boolean>(false);
   const [isHovered, setIsHovered] = useState<boolean>(false);
   const [wasUserClicked, setWasUserClicked] = useState<boolean>(false);
@@ -43,6 +51,21 @@ function Module({ module }: { module: IModule }): JSX.Element {
       setCanDelete(false);
     }
   }
+
+  const updateSelectedModules = useCallback(() => {
+    if (isSelected) {
+      setSelectedModules((prev: IModule[]) => {
+        const newModules = [...prev, module];
+        return newModules;
+      });
+    } else {
+      setSelectedModules((prev) => prev.filter(({ id }) => id !== module.id));
+    }
+  }, [isSelected, module, setSelectedModules]);
+
+  useEffect(() => {
+    updateSelectedModules();
+  }, [updateSelectedModules]);
 
   function toggleSelectedOrDeleted(): void {
     if (!canClick) return;
@@ -81,6 +104,7 @@ function Module({ module }: { module: IModule }): JSX.Element {
         setTheme={setTheme}
       />
       <StyledModule
+        visible={visible}
         border={border}
         onMouseLeave={() => {
           resetOnLeave();
