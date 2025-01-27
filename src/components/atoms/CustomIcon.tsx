@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 const StyledCustomIcon = styled.div`
-  margin-right: 3px;
+  margin-right: 5px;
   display: flex;
   align-items: center;
   justify-content: center;
