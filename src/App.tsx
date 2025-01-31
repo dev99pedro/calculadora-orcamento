@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import './App.css';
 import Catalog from './components/pages/CatalogModules';
-import Resume from './components/pages/Resume';
+import BudgetOverview from './components/pages/BudgetOverview';
 
 const StyledAplication = styled.div`
   font-family: 'Product Sans', sans-serif;
@@ -10,8 +10,8 @@ const StyledAplication = styled.div`
 function App(): JSX.Element {
   return (
     <StyledAplication>
-      <Catalog />
-      <Resume />
+      {/* <Catalog /> */}
+      <BudgetOverview />
     </StyledAplication>
   );
 }
