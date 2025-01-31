@@ -9,6 +9,7 @@ interface IModule {
   image: string;
   seals?: ISeal[];
   [key: string]: any;
+  fields: string[];
 }
 
 export default IModule;
