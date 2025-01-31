@@ -14,6 +14,7 @@ import ModuleButton from '../molecules/ModuleButton';
 import ThemeHandler from '../handlers/ThemeHandler';
 import ModuleBorder from '../molecules/ModuleBorder';
 import { ThemeEnum } from '../../enums/EThemes';
+import AboutModule from '../molecules/AboutModule';
 
 const StyledModule = styled.div.withConfig({
   shouldForwardProp: (prop) => prop !== 'visible',
@@ -147,6 +148,7 @@ function Module({ module, visible, setSelectedModules }: ModuleProps): JSX.Eleme
               />
             ))}
           </SealContainer>
+          <AboutModule fields={module.fields} />
         </ModulesInfos>
       </StyledModule>
     </>
