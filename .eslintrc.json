@@ -37,8 +37,8 @@
           {
             "allowExpressions": true
           }
-        ]
+        ],
+        "linebreak-style": ["error", "windows"]
     }
-    
   }
   
