@@ -38,7 +38,7 @@
             "allowExpressions": true
           }
         ],
-        "linebreak-style": 0
+        "linebreak-style": ["error", "windows"]
     }
   }
   
