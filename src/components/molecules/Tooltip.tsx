@@ -1,34 +1,39 @@
 import { useState } from 'react';
 import styled from 'styled-components';
-import ITooltip from '../../interfaces/ITooltip';
 
-const DivTooltip = styled.div`
+interface TooltipProps {
+  icon: React.ReactNode;
+  content: string;
+}
+
+const StyledContainer = styled.div`
   position: relative;
+  color: #111;
+  font-size: 14px;
+  font-weight: 700;
 `;
 
-const DivTooltipDescription = styled.div`
+const StyledIcon = styled.span``;
+
+const StyledContent = styled.span<{ $visible: boolean }>`
   position: absolute;
+  opacity: ${({ $visible }) => ($visible ? 1 : 0)};
+  transition: opacity 0.2s ease-in-out;
 `;
 
-function Tooltip({ tooltip, children }: ITooltip): JSX.Element {
-  const [isVisible, setIsVisible] = useState(false);
-
-  const showTooltip = (): void => setIsVisible(true);
-  const hideTooltip = (): void => setIsVisible(false);
-
+function Tooltip({ icon, content }: TooltipProps): JSX.Element {
+  const [visible, setVisible] = useState(false);
   return (
-    <DivTooltip
-      onMouseEnter={showTooltip}
-      onMouseLeave={hideTooltip}
+    <StyledContainer
+      onMouseEnter={() => setVisible(true)}
+      onMouseLeave={() => setVisible(false)}
     >
-      {children}
-      {isVisible && (
-        <DivTooltipDescription>
-          {tooltip}
-        </DivTooltipDescription>
-      )}
-    </DivTooltip>
+      <StyledIcon>{ icon }</StyledIcon>
+      {visible && <StyledContent $visible={visible}>{ content }</StyledContent> }
+    </StyledContainer>
   );
 }
 
 export default Tooltip;
+
+// Tooltip
