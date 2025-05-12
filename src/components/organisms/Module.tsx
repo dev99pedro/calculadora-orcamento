@@ -15,10 +15,12 @@ import ThemeHandler from '../handlers/ThemeHandler';
 import ModuleBorder from '../molecules/ModuleBorder';
 import { ThemeEnum } from '../../enums/EThemes';
 import AboutModule from '../molecules/AboutModule';
+import TextInputWithLabel from '../molecules/InputTestMolecule';
+import AnswerInputTest from '../molecules/AnswerInputTest';
 
 const StyledModule = styled.div.withConfig({
   shouldForwardProp: (prop) => prop !== 'visible',
-})<{ border: string, visible: boolean }>`
+}) <{ border: string, visible: boolean }>`
   display: ${(props) => (props.visible ? 'flex' : 'none')};
   width: 720px;
   min-height: 200px;
@@ -93,6 +95,8 @@ function Module({ module, visible, setSelectedModules }: ModuleProps): JSX.Eleme
     }
   }
 
+  const [nome, setNome] = useState('');
+
   return (
     <>
       <ThemeHandler
@@ -148,6 +152,10 @@ function Module({ module, visible, setSelectedModules }: ModuleProps): JSX.Eleme
               />
             ))}
           </SealContainer>
+          <TextInputWithLabel label="Nome"
+            value={nome}
+            onChange={setNome} />
+            <AnswerInputTest text={nome}/>
           <AboutModule fields={module.fields} />
         </ModulesInfos>
       </StyledModule>

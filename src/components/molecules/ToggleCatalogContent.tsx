@@ -23,17 +23,20 @@ function ToggleCatalogContent({
   isFirstTabSelected,
   setIsFirstTabSelected,
 }: ToggleCatalogContentProps): JSX.Element {
+  const handleTabClick = (tab: boolean) => {
+    setIsFirstTabSelected(tab);
+  };
   return (
     <StyledToggleCatalogContent>
       <CatalogViewer
         modulesQtd={modulesQtd}
         isFirstTabSelected={isFirstTabSelected}
-        setIsFirstTabSelected={setIsFirstTabSelected}
+        setIsFirstTabSelected={() => handleTabClick(true)}
       />
       <SelectedViewer
         selectedModulesQtd={selectedModules.length}
         isFirstTabSelected={isFirstTabSelected}
-        setIsFirstTabSelected={setIsFirstTabSelected}
+        setIsFirstTabSelected={() => handleTabClick(false)}
       />
     </StyledToggleCatalogContent>
   );

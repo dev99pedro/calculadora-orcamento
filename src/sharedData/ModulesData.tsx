@@ -11,7 +11,7 @@ const modules: IModule[] = [
     image: ModuleImages.id1,
     name: 'Imagem Full',
     complexity: Complexity.LOW,
-    description: 'A imagem tem largura fixa e altura variável. Pode ser usado para banner principais, reengajamento ou faixas.',
+    description: ' largura fixa e altura variável. Pode ser usado para banner principais, reengajamento ou faixas.',
     seals: [seals.RECOMMENDED,
       seals.AGILE],
     type: ModuleTypes.OnlyImages,
@@ -922,6 +922,17 @@ const modules: IModule[] = [
       EFields.BUTTON4,
       EFields.IMAGE4,
       EFields.LINK4,
+    ],
+  },
+  {
+    id: 33,
+    image: ModuleImages.id1,
+    name: 'VITRINE TESTE',
+    complexity: Complexity.LOW,
+    description: 'VITRINE TESTE',
+    type: ModuleTypes.TextsAndImages,
+    fields: [
+      EFields.DISCOUNT_TAG,
     ],
   },
 ];

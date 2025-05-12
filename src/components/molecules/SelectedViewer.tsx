@@ -28,6 +28,7 @@ interface CatalogViewerProps {
   setIsFirstTabSelected: React.Dispatch<React.SetStateAction<boolean>>
 }
 
+
 function CatalogViewer({
   selectedModulesQtd,
   isFirstTabSelected,

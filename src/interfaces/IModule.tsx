@@ -10,6 +10,8 @@ interface IModule {
   seals?: ISeal[];
   [key: string]: any;
   fields: string[];
+ 
+
 }
 
 export default IModule;

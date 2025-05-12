@@ -18,12 +18,17 @@ const StyledCatalog = styled.div`
 
 function Catalog(): JSX.Element {
   const [filteredByAll, setFilteredByAll] = useState<IModule[]>(ModulesData);
+  // Guarda os modulso filtrados
   const [selectedModules, setSelectedModules] = useState<IModule[]>([]);
+  // Guarda os módulos que o usuário selecionou.
   const [isFirstTabSelected, setIsFirstTabSelected] = useState<boolean>(true);
+  // Define qual aba está ativa:
 
   function isModuleVisible(module: IModule): boolean {
     return filteredByAll.some(({ id }) => module.id === id);
   }
+  // Diz se um módulo deve ser mostrado com base no filtro.
+  console.log(selectedModules)
 
   return (
     <>
@@ -31,23 +36,42 @@ function Catalog(): JSX.Element {
         selectedModules={selectedModules}
         modulesQtd={ModulesData.length}
         isFirstTabSelected={isFirstTabSelected}
-        setIsFirstTabSelected={setIsFirstTabSelected}
+        setIsFirstTabSelected={setIsFirstTabSelected}  // Passa o setState diretamente
       />
-      <StyledCatalog>
-        <FiltersContainer resultsQtd={filteredByAll.length} setFilteredByAll={setFilteredByAll} />
-        {
-          ModulesData.map((module) => (
-            <Module
-              visible={isModuleVisible(module)}
-              module={module}
-              key={module.id}
-              setSelectedModules={setSelectedModules}
-            />
-          ))
-        }
-      </StyledCatalog>
+
+      {isFirstTabSelected ? (
+        <StyledCatalog>
+          <FiltersContainer resultsQtd={filteredByAll.length} setFilteredByAll={setFilteredByAll} />
+          {
+            ModulesData.map((module) => (
+              <Module
+                visible={isModuleVisible(module)}
+                module={module}
+                key={module.id}
+                setSelectedModules={setSelectedModules}
+              />
+            ))
+          }
+        </StyledCatalog>
+      ) : (
+        <StyledCatalog>
+          <FiltersContainer resultsQtd={filteredByAll.length} setFilteredByAll={setFilteredByAll} />
+          {
+            selectedModules.map((module) => (
+              <Module
+                visible={isModuleVisible(module)}
+                module={module}
+                key={module.id}
+                setSelectedModules={setSelectedModules}
+              />
+            ))
+          }
+        </StyledCatalog>
+      )}
     </>
   );
+
 }
 
+// MAPEAR todos que foram adicionados
 export default Catalog;
